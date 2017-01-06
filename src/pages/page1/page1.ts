@@ -79,7 +79,6 @@ agregarGimnasios(): void {
     gym3.nombre = 'Gimnasium';
     gym3.pais = 'Argentina';
     this.servicioPersonas.setGimnasio(gym3);
-
 }
 
 mostrarGimnasios(): void {

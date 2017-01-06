@@ -31,7 +31,7 @@ export class ServicioPersonas {
     setGimnasio(gimnasio: Gimnasio): void {
       var arrayGimnasios = [];
         this.storage.get('gimnasios').then((gimnasios) => {
-          if (gimnasios === null) {
+          if (gimnasios == null) {
              arrayGimnasios.push(gimnasio);
           } else {
              arrayGimnasios = gimnasios;

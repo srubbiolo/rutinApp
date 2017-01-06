@@ -1,3 +1,5 @@
+//TODO: permitir seleccionar entrenador al usuario,sería igual que el select gimnasio.
+//TODO: validar bien todo los campos, por ahora no valido un orto
 import { Component , OnInit} from '@angular/core';
 
 import { NavController } from 'ionic-angular';
@@ -6,6 +8,7 @@ import { Cliente } from '../../app/Modelo/cliente';
 import { Entrenador } from '../../app/Modelo/entrenador';
 import { Gimnasio } from '../../app/Modelo/gimnasio';
 import { Alertas } from '../../app/componentes/alertas/alertas';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'registrar-usuario',
@@ -17,17 +20,64 @@ export class RegistrarUsuario implements OnInit{
   gimnasios:  Gimnasio[];
   gimnasioSeleccionado;
   usuarioSeleccionado;
+  datosCompletados;
   tipoUsuario;
   gimnasioDeUsuario: Gimnasio;
 
+   myForm: FormGroup;
+   userInfo: {nombre: string,
+              apellido: string,
+              password: string,
+              password2: string,
+              dni: number,
+              fechaDeNacimiento: Date,
+              email: string,
+              telefono: number} = 
+     {        nombre: '',
+              apellido: '',
+              password: '',
+              password2: '',
+              dni: null,
+              fechaDeNacimiento: null,
+              email: '',
+              telefono: null};
+
   constructor(public navCtrl: NavController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private alertas: Alertas, private entrenador: Entrenador,
-              private gimnasio: Gimnasio) {
+              private gimnasio: Gimnasio, public formBuilder: FormBuilder) { 
+    this.myForm = this.formBuilder.group({
+            'nombre': ['', [Validators.required]],
+            'apellido': ['', [Validators.required]],
+            'password': ['', [Validators.required, this.passwordValidator.bind(this)]],
+            'password2': ['', [Validators.required, this.passwordValidator.bind(this)]],
+            'dni': ['', [Validators.required]],
+            'fechaDeNacimiento': ['', [Validators.required]],
+            'email': ['', [Validators.required]],
+            'telefono': ['', [Validators.required]]
+        });
+  }
+
+  passwordValidator(control: FormControl): {[s: string]: boolean} {
+        if (control.value !== '') {
+            if (!control.value.match(/^(?=.*\d).{4,30}$/)) {
+                return {invalidPassword: true};
+            }
+        }
+    }
+
+  isValid(field: string) {
+      let formField = this.myForm.get(field);
+      return formField.valid || formField.pristine;
+  }
+
+  onSubmit() {
+      console.log('submitting form');
   }
 
   ngOnInit(): void {
-    this.usuarioSeleccionado = true;
     this.gimnasioSeleccionado = false;
+    this.usuarioSeleccionado = true;
+    this.datosCompletados = true;
     this.recargarGimnasios();
   }
 
@@ -41,6 +91,7 @@ export class RegistrarUsuario implements OnInit{
     setTimeout(() => {
       console.log('usuarioSeleccionado', this.tipoUsuario);
       this.usuarioSeleccionado = true;
+      this.datosCompletados = false;
     }, this.TIEMPO_TIMEOUT);
   }
 
