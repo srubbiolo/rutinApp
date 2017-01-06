@@ -9,13 +9,25 @@
 
 <ion-content padding>
   <h3>Ionic Menu Starter</h3>
+<ion-list>
+  <ion-item>
+    <ion-label color="primary" floating>Usuario</ion-label>
+    <ion-input type="text" [(ngModel)]="usuario" (input)="revisarCampos()" name="usuario" value=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>Contraseña</ion-label>
+    <ion-input type="password" [(ngModel)]="contrasena" (input)="revisarCampos()" name="contrasena"></ion-input>
+  </ion-item>
+  <button ion-button full (click)="iniciarSesion()" [disabled]="!habilitarBoton">Iniciar Sesión</button>
+  <button ion-button full (click)="registrarUsuario()" >No estoy registrado</button>
+</ion-list>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
 
   <button ion-button secondary menuToggle>Toggle Menu</button>
   <button ion-button color="secondary" (click)="eliminar()">Eliminar todo</button>
 <button ion-button color="danger" (click)="agregar()">agregar chango</button>
 <button ion-button color="dark"(click)="mostrar()">mostrar todo</button>
+
+<button ion-button color="danger" (click)="agregarGimnasios()">Agregar gimnasios</button>
+<button ion-button color="dark"(click)="mostrarGimnasios()">Mostrar gimnasios</button>
 </ion-content>

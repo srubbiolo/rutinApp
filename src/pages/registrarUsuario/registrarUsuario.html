@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Registrar Usuario</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+<div class="seleccionarGimnasio" [hidden]="gimnasioSeleccionado">
+    <h4>Seleccione su gimnasio</h4>
+    <button ion-button small color="secondary" (click)="sinGimnasio()">No poseo gimnasio</button>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let gimnasio of gimnasios" (click)="agregarGimnasio(gimnasio)">
+        {{ gimnasio.nombre }}
+      </ion-item>
+    </ion-list>
+</div>
+
+<div class="seleccionarTipoUsuario" [hidden]="usuarioSeleccionado">
+  <ion-list radio-group [(ngModel)]="tipoUsuario" (ngModelChange)="tipoUsuarioSeleccionado()">
+  <ion-list-header>¿Qué es usted?</ion-list-header>
+
+  <ion-item>
+    <ion-label>Entrenador</ion-label>
+    <ion-radio value="entrenador"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Cliente</ion-label>
+    <ion-radio value="cliente"></ion-radio>
+  </ion-item>
+  </ion-list>
+</div>
+</ion-content>
