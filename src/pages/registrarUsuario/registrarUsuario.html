@@ -54,7 +54,7 @@
 
       <ion-item>
           <ion-label color="primary" floating>Fecha de nacimiento</ion-label>
-          <ion-input [(ngModel)]="userInfo.fechaDeNacimiento" formControlName="fechaDeNacimiento" type="text"></ion-input> 
+          <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="userInfo.fechaDeNacimiento" formControlName="fechaDeNacimiento"></ion-datetime>
       </ion-item>
 
       <ion-item>
@@ -76,7 +76,7 @@
           <ion-label color="primary" floating>Vuelva a ingresar contraseña</ion-label>
           <ion-input [(ngModel)]="userInfo.password2" formControlName="password2" type="password"></ion-input> 
       </ion-item>
-      <p *ngIf="!isValid('password')" color="danger" padding-left>Invalid password. At least 4 chars and a number.</p>
+      <p *ngIf="!isValid('password2')" color="danger" padding-left>Invalid password. At least 4 chars and a number.</p>
 
       <button ion-button type="submit" [disabled]="!myForm.valid">Create Account</button>
   </form>

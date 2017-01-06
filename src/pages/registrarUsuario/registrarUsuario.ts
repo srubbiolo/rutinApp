@@ -50,10 +50,10 @@ export class RegistrarUsuario implements OnInit{
             'apellido': ['', [Validators.required]],
             'password': ['', [Validators.required, this.passwordValidator.bind(this)]],
             'password2': ['', [Validators.required, this.passwordValidator.bind(this)]],
-            'dni': ['', [Validators.required]],
-            'fechaDeNacimiento': ['', [Validators.required]],
+            'dni': [null, [Validators.required]],
+            'fechaDeNacimiento': [null, [Validators.required]],
             'email': ['', [Validators.required]],
-            'telefono': ['', [Validators.required]]
+            'telefono': [null, [Validators.required]]
         });
   }
 
@@ -71,7 +71,7 @@ export class RegistrarUsuario implements OnInit{
   }
 
   onSubmit() {
-      console.log('submitting form');
+      console.log(this.userInfo);
   }
 
   ngOnInit(): void {
