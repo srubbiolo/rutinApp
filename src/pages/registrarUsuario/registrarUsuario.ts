@@ -27,33 +27,34 @@ export class RegistrarUsuario implements OnInit{
    myForm: FormGroup;
    userInfo: {nombre: string,
               apellido: string,
-              password: string,
-              password2: string,
               dni: number,
               fechaDeNacimiento: Date,
               email: string,
-              telefono: number} = 
-     {        nombre: '',
+              telefono: number,
+              password: string,
+              password2: string
+            } = {
+              nombre: '',
               apellido: '',
-              password: '',
-              password2: '',
               dni: null,
               fechaDeNacimiento: null,
               email: '',
-              telefono: null};
+              telefono: null,
+              password: '',
+              password2: ''};
 
   constructor(public navCtrl: NavController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private alertas: Alertas, private entrenador: Entrenador,
-              private gimnasio: Gimnasio, public formBuilder: FormBuilder) { 
+              private gimnasio: Gimnasio, public formBuilder: FormBuilder) {
     this.myForm = this.formBuilder.group({
             'nombre': ['', [Validators.required]],
             'apellido': ['', [Validators.required]],
-            'password': ['', [Validators.required, this.passwordValidator.bind(this)]],
-            'password2': ['', [Validators.required, this.passwordValidator.bind(this)]],
-            'dni': [null, [Validators.required]],
-            'fechaDeNacimiento': [null, [Validators.required]],
+            'dni': ['', [Validators.required]],
+            'fechaDeNacimiento': ['', [Validators.required]],
             'email': ['', [Validators.required]],
-            'telefono': [null, [Validators.required]]
+            'telefono': ['', [Validators.required]],
+            'password': ['', [Validators.required, this.passwordValidator.bind(this)]],
+            'password2': ['', [Validators.required, this.passwordValidator.bind(this)]]
         });
   }
 

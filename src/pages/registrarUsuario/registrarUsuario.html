@@ -36,50 +36,50 @@
 <div class="formularioCompleto" [hidden]="datosCompletados">
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-      <ion-item>
-          <ion-label color="primary" floating>Nombre</ion-label>
-          <ion-input [(ngModel)]="userInfo.nombre" formControlName="nombre" type="text"></ion-input>
-      </ion-item>
-      <p *ngIf="!isValid('nombre')" color="danger" padding-left>Insert an username</p>
+    <ion-item>
+        <ion-label color="primary" floating>Nombre</ion-label>
+        <ion-input [(ngModel)]="userInfo.nombre" formControlName="nombre" type="text"></ion-input>
+    </ion-item>
+    <p *ngIf="!isValid('nombre')" color="danger" padding-left>Inserte su nombre para seguir"</p>
 
-      <ion-item>
-          <ion-label color="primary" floating>Apellido</ion-label>
-          <ion-input [(ngModel)]="userInfo.apellido" formControlName="dni" type="apellido"></ion-input> 
-      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Apellido</ion-label>
+        <ion-input [(ngModel)]="userInfo.apellido" formControlName="apellido" type="text"></ion-input>
+    </ion-item>
 
-      <ion-item>
-          <ion-label color="primary" floating>Dni</ion-label>
-          <ion-input [(ngModel)]="userInfo.dni" formControlName="dni" type="text"></ion-input> 
-      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>DNI</ion-label>
+        <ion-input [(ngModel)]="userInfo.dni" formControlName="dni" type="text"></ion-input>
+    </ion-item>
 
-      <ion-item>
-          <ion-label color="primary" floating>Fecha de nacimiento</ion-label>
-          <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="userInfo.fechaDeNacimiento" formControlName="fechaDeNacimiento"></ion-datetime>
-      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Ingrese su fecha de nacimiento</ion-label>
+        <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="userInfo.fechaDeNacimiento" formControlName="fechaDeNacimiento"></ion-datetime>
+    </ion-item>
 
-      <ion-item>
-          <ion-label color="primary" floating>Correo electronico</ion-label>
-          <ion-input [(ngModel)]="userInfo.email" formControlName="email" type="text"></ion-input> 
-      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Email</ion-label>
+        <ion-input [(ngModel)]="userInfo.email" formControlName="email" type="text"></ion-input>
+    </ion-item>
 
-      <ion-item>
-          <ion-label color="primary" floating>Teléfono</ion-label>
-          <ion-input [(ngModel)]="userInfo.telefono" formControlName="telefono" type="text"></ion-input> 
-      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Telefono Celular</ion-label>
+        <ion-input [(ngModel)]="userInfo.telefono" formControlName="telefono" type="text"></ion-input>
+    </ion-item>
 
-      <ion-item>
-          <ion-label color="primary" floating>Contraseña</ion-label>
-          <ion-input [(ngModel)]="userInfo.password" formControlName="password" type="password"></ion-input> 
-      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Contraseña</ion-label>
+        <ion-input [(ngModel)]="userInfo.password" formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <p *ngIf="!isValid('password')" color="danger" padding-left>Invalid password. At least 4 chars and a number.</p>
+    <ion-item>
+        <ion-label color="primary" floating>Vuelva a ingresar contraseña</ion-label>
+        <ion-input [(ngModel)]="userInfo.password2" formControlName="password2" type="password"></ion-input>
+    </ion-item>
+    <p *ngIf="!isValid('password2')" color="danger" padding-left>Invalid password. At least 4 chars and a number.</p>
 
-      <ion-item>
-          <ion-label color="primary" floating>Vuelva a ingresar contraseña</ion-label>
-          <ion-input [(ngModel)]="userInfo.password2" formControlName="password2" type="password"></ion-input> 
-      </ion-item>
-      <p *ngIf="!isValid('password2')" color="danger" padding-left>Invalid password. At least 4 chars and a number.</p>
-
-      <button ion-button type="submit" [disabled]="!myForm.valid">Create Account</button>
-  </form>
+    <button ion-button type="submit" [disabled]="!myForm.valid">Create Account</button>
+</form>
 
 </div>
 
