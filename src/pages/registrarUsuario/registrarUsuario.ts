@@ -17,8 +17,8 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 export class RegistrarUsuario implements OnInit{
 
   TIEMPO_TIMEOUT = 300;
-  todosLosClientes: Cliente[];
-  todosLosEntrenadores: Entrenador[];
+  todosLosClientes;
+  todosLosEntrenadores;
   gimnasios:  Gimnasio[];
   gimnasioSeleccionado;
   usuarioSeleccionado;
@@ -26,6 +26,7 @@ export class RegistrarUsuario implements OnInit{
   tipoUsuario;
   gimnasioDeUsuario: Gimnasio;
   sonPasswordsIguales;
+  sonDniOEmailDuplicados;
 
    miForm: FormGroup;
    infoUsuario: {nombre: string,
@@ -66,6 +67,7 @@ export class RegistrarUsuario implements OnInit{
     this.usuarioSeleccionado = true;
     this.datosCompletados = true;
     this.sonPasswordsIguales = false;
+    this.sonDniOEmailDuplicados = false;
     this.recargarGimnasios();
     this.cargarTodosLosUsuarios();
   }
@@ -78,6 +80,18 @@ export class RegistrarUsuario implements OnInit{
     this.servicioPersonas.getTodosLosEntrenadores().then((val) => {
       this.todosLosEntrenadores = val;
     })
+  }
+
+  verificarDniDuplicado(): void {
+    var todosLosUsuarios = this.todosLosClientes.concat(this.todosLosEntrenadores);
+    console.log(todosLosUsuarios);
+
+    var usuarioDuplicado = todosLosUsuarios.find(usuario => usuario.dni == this.infoUsuario.dni);
+    console.log(usuarioDuplicado);
+  }
+
+  verificarEmailDuplicado(): void {
+    var todosLosUsuarios = this.todosLosClientes.concat(this.todosLosEntrenadores);
   }
 
   nombreValidator(control: FormControl): {[s: string]: boolean} {

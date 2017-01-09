@@ -50,9 +50,9 @@
 
     <ion-item>
         <ion-label color="primary" floating>DNI</ion-label>
-        <ion-input [(ngModel)]="infoUsuario.dni" formControlName="dni" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.dni" (focusout)="verificarDniDuplicado()" formControlName="dni" type="text"></ion-input>
     </ion-item>
-    <p *ngIf="!isValid('dni')" color="danger" padding-left>Inserte DNI o verifique el numero ingresado. Sin puntos ejemplo 34315653"</p>
+    <p *ngIf="!isValid('dni')" color="danger" padding-left>Inserte DNI o verifique el numero ingresado. Sin puntos, ejemplo: 34315653"</p>
 
     <ion-item>
         <ion-label color="primary" floating>Ingrese su fecha de nacimiento</ion-label>
