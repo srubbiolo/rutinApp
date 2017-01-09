@@ -17,15 +17,18 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 export class RegistrarUsuario implements OnInit{
 
   TIEMPO_TIMEOUT = 300;
+  todosLosClientes: Cliente[];
+  todosLosEntrenadores: Entrenador[];
   gimnasios:  Gimnasio[];
   gimnasioSeleccionado;
   usuarioSeleccionado;
   datosCompletados;
   tipoUsuario;
   gimnasioDeUsuario: Gimnasio;
+  sonPasswordsIguales;
 
-   myForm: FormGroup;
-   userInfo: {nombre: string,
+   miForm: FormGroup;
+   infoUsuario: {nombre: string,
               apellido: string,
               dni: string,
               fechaDeNacimiento: Date,
@@ -46,72 +49,105 @@ export class RegistrarUsuario implements OnInit{
   constructor(public navCtrl: NavController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private alertas: Alertas, private entrenador: Entrenador,
               private gimnasio: Gimnasio, public formBuilder: FormBuilder) {
-    this.myForm = this.formBuilder.group({
-            'nombre': ['', [Validators.required, this.nombreValidator.bind(this)]],
-            'apellido': ['', [Validators.required, this.nombreValidator.bind(this)]],
-            'dni': ['', [Validators.required, this.dniValidator.bind(this)]],
-            'fechaDeNacimiento': ['', [Validators.required]],
-            'email': ['', [Validators.required, this.emailValidator.bind(this)]],
-            'telefono': ['', [Validators.required, this.telefonoValidator.bind(this)]],
-            'password': ['', [Validators.required, this.passwordValidator.bind(this)]],
-            'password2': ['', [Validators.required, this.passwordValidator.bind(this)]]
-        });
-  }
-
-  passwordValidator(control: FormControl): {[s: string]: boolean} {
-      if (control.value !== '') {
-          if (!control.value.match(/^(?=.*\d).{4,30}$/)) {
-              return {invalidPassword: true};
-          }
-      }
-  }
-
-  nombreValidator(control: FormControl): {[s: string]: boolean} {
-      if (control.value !== '') {
-          if (!control.value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/)) {
-              return {invalidNombre: true};
-          }
-      }
-  }
-
-  telefonoValidator(control: FormControl): {[s: string]: boolean} {
-      if (control.value !== '') {
-          if (!control.value.match(/^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/)) {
-              return {invalidTelefono: true};
-          }
-      }
-  }
-
-  dniValidator(control: FormControl): {[s: string]: boolean} {
-      if (control.value !== '') {
-          if (!control.value.match(/^\s*?[0-9]{7,8}\s*$/)) {
-              return {invalidDni: true};
-          }
-      }
-  }
-
-  emailValidator(control: FormControl): {[s: string]: boolean} {
-      if (control.value !== '') {
-          if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-              return {invalidEmail: true};
-          }
-      }
-  }
-
-  isValid(field: string) {
-      let formField = this.myForm.get(field);
-      return formField.valid || formField.pristine;
-  }
-
-  onSubmit() {
-      console.log(this.userInfo);
+    this.miForm = this.formBuilder.group({
+      'nombre': ['', [Validators.required, this.nombreValidator.bind(this)]],
+      'apellido': ['', [Validators.required, this.nombreValidator.bind(this)]],
+      'dni': ['', [Validators.required, this.dniValidator.bind(this)]],
+      'fechaDeNacimiento': ['', [Validators.required]],
+      'email': ['', [Validators.required, this.emailValidator.bind(this)]],
+      'telefono': ['', [Validators.required, this.telefonoValidator.bind(this)]],
+      'password': ['', [Validators.required, this.passwordValidator.bind(this)]],
+      'password2': ['', [Validators.required, this.passwordValidator.bind(this)]]
+    });
   }
 
   ngOnInit(): void {
     this.gimnasioSeleccionado = false;
     this.usuarioSeleccionado = true;
     this.datosCompletados = true;
+    this.sonPasswordsIguales = false;
     this.recargarGimnasios();
+    this.cargarTodosLosUsuarios();
+  }
+
+  cargarTodosLosUsuarios(): void {
+    this.servicioPersonas.getTodosLosClientes().then((val) => {
+      this.todosLosClientes = val;
+    })
+
+    this.servicioPersonas.getTodosLosEntrenadores().then((val) => {
+      this.todosLosEntrenadores = val;
+    })
+  }
+
+  nombreValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value !== '') {
+        if (!control.value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/)) {
+            return {invalidNombre: true};
+        }
+    }
+  }
+
+  dniValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value !== '') {
+        if (!control.value.match(/^\s*?[0-9]{7,8}\s*$/)) {
+            return {invalidDni: true};
+        }
+    }
+  }
+
+  emailValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value !== '') {
+        if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            return {invalidEmail: true};
+        }
+    }
+  }
+
+  telefonoValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value !== '') {
+        if (!control.value.match(/^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/)) {
+            return {invalidTelefono: true};
+        }
+    }
+  }
+
+  passwordValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value !== '') {
+        if (!control.value.match(/^(?=.*\d).{4,30}$/)) {
+            return {invalidPassword: true};
+        }
+    }
+  }
+
+  revisarPasswordsIguales(): void {
+    if(this.infoUsuario.password === this.infoUsuario.password2) {
+      this.sonPasswordsIguales = true;
+    } else {
+      this.sonPasswordsIguales = false;
+    }
+  }
+
+  isValid(field: string) {
+      let formField = this.miForm.get(field);
+      return formField.valid || formField.pristine;
+  }
+
+  onSubmit() {
+    var usuario = (this.tipoUsuario == 'cliente') ? new Cliente : new Entrenador;
+    usuario.nombre = this.infoUsuario.nombre;
+    usuario.apellido = this.infoUsuario.apellido;
+    usuario.dni = parseInt(this.infoUsuario.dni);
+    usuario.email = this.infoUsuario.email;
+    usuario.gimnasio = this.gimnasioDeUsuario;
+    usuario.contraseña = this.infoUsuario.password;
+    usuario.fechaNacimiento = new Date(this.infoUsuario.fechaDeNacimiento);
+    usuario.telefono = parseInt(this.infoUsuario.telefono);
+    // TODO: si es usuario agregar en caso que haya seleccionado un entrenador
+    (this.tipoUsuario == 'cliente') ? this.servicioPersonas.setUsuario(usuario, 'cliente') : 
+                                      this.servicioPersonas.setUsuario(usuario, 'entrenador');
+    //this.navCtrl.push(lugar dodne voy a ir);
+
   }
 
   recargarGimnasios(): void {
@@ -122,7 +158,6 @@ export class RegistrarUsuario implements OnInit{
 
   tipoUsuarioSeleccionado() {
     setTimeout(() => {
-      console.log('usuarioSeleccionado', this.tipoUsuario);
       this.usuarioSeleccionado = true;
       this.datosCompletados = false;
     }, this.TIEMPO_TIMEOUT);

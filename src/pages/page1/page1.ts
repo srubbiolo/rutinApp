@@ -44,13 +44,6 @@ export class Page1 {
         //fire up alert component
     }
   }
-agregar(): void {
-  this.cliente.nombre = 'juli';
-  this.cliente.apellido = 'rubbiolo';
-  this.cliente.dni = 2323232322;
-  this.servicioPersonas.setCliente(this.cliente);
-
-}
 
 agregarGimnasios(): void {
     var gym1 = new Gimnasio();

@@ -4,7 +4,6 @@ export class Persona {
     dni: number;
     contraseña: String;
     fechaNacimiento: Date;
-    edad: number;
     email: String;
     telefono: number;
 }

@@ -15,16 +15,20 @@ export class ServicioPersonas {
     //}
     constructor(private storage: Storage, private gimnasio: Gimnasio) { }
 
-    setCliente(cliente: Cliente): void {
-      var arrayClientes = [];
-      this.storage.get('clientes').then((clientes) => {
-        if (clientes === null) {
-           arrayClientes.push(cliente);
+    setUsuario(dataUsuario: any, tipoUsuario: string): void {
+      var arrayUsuarios = [],
+          usuario = (tipoUsuario == 'cliente') ? 'clientes' : 'entrenadores';
+      this.storage.get(usuario).then((usuarios) => {
+        console.log(usuarios);
+        if (usuarios == null) {
+          console.log('entro por aca == null');
+           arrayUsuarios.push(dataUsuario);
         } else {
-           arrayClientes = clientes;
-           arrayClientes.push(cliente);
+          console.log('entro por aca else');
+           arrayUsuarios = usuarios;
+           arrayUsuarios.push(dataUsuario);
         }
-        this.storage.set('clientes', arrayClientes);
+        this.storage.set(usuario, arrayUsuarios);
       })
     }
 
@@ -46,6 +50,10 @@ export class ServicioPersonas {
 
     getTodosLosClientes(): any {
       return this.storage.get('clientes');
+    }
+
+    getTodosLosEntrenadores(): any {
+      return this.storage.get('entrenadores');
     }
 
     eliminarTodo(): void {

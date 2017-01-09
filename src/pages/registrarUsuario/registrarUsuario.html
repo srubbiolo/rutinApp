@@ -35,50 +35,57 @@
 
 <div class="formularioCompleto" [hidden]="datosCompletados">
 
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="miForm" (ngSubmit)="onSubmit()">
     <ion-item>
         <ion-label color="primary" floating>Nombre</ion-label>
-        <ion-input [(ngModel)]="userInfo.nombre" formControlName="nombre" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.nombre" formControlName="nombre" type="text"></ion-input>
     </ion-item>
-    <p *ngIf="!isValid('nombre')" color="danger" padding-left>Inserte su nombre para seguir"</p>
+    <p *ngIf="!isValid('nombre')" color="danger" padding-left>Inserte nombre o verifique el campo ingresado</p>
 
     <ion-item>
         <ion-label color="primary" floating>Apellido</ion-label>
-        <ion-input [(ngModel)]="userInfo.apellido" formControlName="apellido" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.apellido" formControlName="apellido" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="!isValid('apellido')" color="danger" padding-left>Inserte apellido o verifique el campo ingresado"</p>
 
     <ion-item>
         <ion-label color="primary" floating>DNI</ion-label>
-        <ion-input [(ngModel)]="userInfo.dni" formControlName="dni" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.dni" formControlName="dni" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="!isValid('dni')" color="danger" padding-left>Inserte DNI o verifique el numero ingresado. Sin puntos ejemplo 34315653"</p>
 
     <ion-item>
         <ion-label color="primary" floating>Ingrese su fecha de nacimiento</ion-label>
-        <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="userInfo.fechaDeNacimiento" formControlName="fechaDeNacimiento"></ion-datetime>
+        <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="infoUsuario.fechaDeNacimiento" formControlName="fechaDeNacimiento"></ion-datetime>
     </ion-item>
+    <p *ngIf="!isValid('fechaDeNacimiento')" color="danger" padding-left>Ingrese su fecha de nacimiento</p>
 
     <ion-item>
         <ion-label color="primary" floating>Email</ion-label>
-        <ion-input [(ngModel)]="userInfo.email" formControlName="email" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.email" formControlName="email" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="!isValid('email')" color="danger" padding-left>Ingrese su email o verifique lo ingresado</p>
 
     <ion-item>
         <ion-label color="primary" floating>Telefono Celular</ion-label>
-        <ion-input [(ngModel)]="userInfo.telefono" formControlName="telefono" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.telefono" formControlName="telefono" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="!isValid('telefono')" color="danger" padding-left>Ingrese su telefono o verifique lo ingresado. Ingrese el teléfono sin ningún simbolo con la caracteristica ejemplo: 3516775504</p>
+
 
     <ion-item>
         <ion-label color="primary" floating>Contraseña</ion-label>
-        <ion-input [(ngModel)]="userInfo.password" formControlName="password" type="password"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.password" formControlName="password" type="password"></ion-input>
     </ion-item>
-    <p *ngIf="!isValid('password')" color="danger" padding-left>Invalid password. At least 4 chars and a number.</p>
+    <p *ngIf="!isValid('password')" color="danger" padding-left>Contraseña inválida. Como menos 4 caracteres y un número</p>
     <ion-item>
         <ion-label color="primary" floating>Vuelva a ingresar contraseña</ion-label>
-        <ion-input [(ngModel)]="userInfo.password2" formControlName="password2" type="password"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.password2" (input)="revisarPasswordsIguales()" formControlName="password2" type="password"></ion-input>
     </ion-item>
-    <p *ngIf="!isValid('password2')" color="danger" padding-left>Invalid password. At least 4 chars and a number.</p>
+    <p *ngIf="!isValid('password2')" color="danger" padding-left>Contraseña inválida. Como menos 4 caracteres y un número</p>
+    <p *ngIf="!sonPasswordsIguales" color="danger" padding-left>Las contraseñas con coinciden!</p>
 
-    <button ion-button type="submit" [disabled]="!myForm.valid">Create Account</button>
+    <button ion-button type="submit" [disabled]="!miForm.valid || !sonPasswordsIguales">Create Account</button>
 </form>
 
 </div>
