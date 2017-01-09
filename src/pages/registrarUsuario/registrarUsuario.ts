@@ -27,19 +27,19 @@ export class RegistrarUsuario implements OnInit{
    myForm: FormGroup;
    userInfo: {nombre: string,
               apellido: string,
-              dni: number,
+              dni: string,
               fechaDeNacimiento: Date,
               email: string,
-              telefono: number,
+              telefono: string,
               password: string,
               password2: string
             } = {
               nombre: '',
               apellido: '',
-              dni: null,
+              dni: '',
               fechaDeNacimiento: null,
               email: '',
-              telefono: null,
+              telefono: '',
               password: '',
               password2: ''};
 
@@ -47,24 +47,56 @@ export class RegistrarUsuario implements OnInit{
               private cliente: Cliente, private alertas: Alertas, private entrenador: Entrenador,
               private gimnasio: Gimnasio, public formBuilder: FormBuilder) {
     this.myForm = this.formBuilder.group({
-            'nombre': ['', [Validators.required]],
-            'apellido': ['', [Validators.required]],
-            'dni': ['', [Validators.required]],
+            'nombre': ['', [Validators.required, this.nombreValidator.bind(this)]],
+            'apellido': ['', [Validators.required, this.nombreValidator.bind(this)]],
+            'dni': ['', [Validators.required, this.dniValidator.bind(this)]],
             'fechaDeNacimiento': ['', [Validators.required]],
-            'email': ['', [Validators.required]],
-            'telefono': ['', [Validators.required]],
+            'email': ['', [Validators.required, this.emailValidator.bind(this)]],
+            'telefono': ['', [Validators.required, this.telefonoValidator.bind(this)]],
             'password': ['', [Validators.required, this.passwordValidator.bind(this)]],
             'password2': ['', [Validators.required, this.passwordValidator.bind(this)]]
         });
   }
 
   passwordValidator(control: FormControl): {[s: string]: boolean} {
-        if (control.value !== '') {
-            if (!control.value.match(/^(?=.*\d).{4,30}$/)) {
-                return {invalidPassword: true};
-            }
-        }
-    }
+      if (control.value !== '') {
+          if (!control.value.match(/^(?=.*\d).{4,30}$/)) {
+              return {invalidPassword: true};
+          }
+      }
+  }
+
+  nombreValidator(control: FormControl): {[s: string]: boolean} {
+      if (control.value !== '') {
+          if (!control.value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/)) {
+              return {invalidNombre: true};
+          }
+      }
+  }
+
+  telefonoValidator(control: FormControl): {[s: string]: boolean} {
+      if (control.value !== '') {
+          if (!control.value.match(/^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/)) {
+              return {invalidTelefono: true};
+          }
+      }
+  }
+
+  dniValidator(control: FormControl): {[s: string]: boolean} {
+      if (control.value !== '') {
+          if (!control.value.match(/^\s*?[0-9]{7,8}\s*$/)) {
+              return {invalidDni: true};
+          }
+      }
+  }
+
+  emailValidator(control: FormControl): {[s: string]: boolean} {
+      if (control.value !== '') {
+          if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+              return {invalidEmail: true};
+          }
+      }
+  }
 
   isValid(field: string) {
       let formField = this.myForm.get(field);
