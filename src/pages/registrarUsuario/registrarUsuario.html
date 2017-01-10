@@ -52,7 +52,8 @@
         <ion-label color="primary" floating>DNI</ion-label>
         <ion-input [(ngModel)]="infoUsuario.dni" (focusout)="verificarDniDuplicado()" formControlName="dni" type="text"></ion-input>
     </ion-item>
-    <p *ngIf="!isValid('dni')" color="danger" padding-left>Inserte DNI o verifique el numero ingresado. Sin puntos, ejemplo: 34315653"</p>
+    <p *ngIf="!isValid('dni')" color="danger" padding-left>Inserte DNI o verifique el numero ingresado. Sin puntos, ejemplo: 34315653</p>
+    <p *ngIf="dniDuplicado" color="danger" padding-left>Ya existe otro usuario registrado con este DNI</p>
 
     <ion-item>
         <ion-label color="primary" floating>Ingrese su fecha de nacimiento</ion-label>
@@ -62,9 +63,10 @@
 
     <ion-item>
         <ion-label color="primary" floating>Email</ion-label>
-        <ion-input [(ngModel)]="infoUsuario.email" formControlName="email" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoUsuario.email" (focusout)="verificarEmailDuplicado()" formControlName="email" type="text"></ion-input>
     </ion-item>
     <p *ngIf="!isValid('email')" color="danger" padding-left>Ingrese su email o verifique lo ingresado</p>
+    <p *ngIf="emailDuplicado" color="danger" padding-left>Ya existe otro usuario registrado con este E-mail</p>
 
     <ion-item>
         <ion-label color="primary" floating>Telefono Celular</ion-label>
@@ -85,7 +87,7 @@
     <p *ngIf="!isValid('password2')" color="danger" padding-left>Contraseña inválida. Como menos 4 caracteres y un número</p>
     <p *ngIf="!sonPasswordsIguales" color="danger" padding-left>Las contraseñas con coinciden!</p>
 
-    <button ion-button type="submit" [disabled]="!miForm.valid || !sonPasswordsIguales">Create Account</button>
+    <button ion-button type="submit" [disabled]="!miForm.valid || !sonPasswordsIguales || dniDuplicado || emailDuplicado">Registrarme</button>
 </form>
 
 </div>

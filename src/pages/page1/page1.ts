@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { ServicioPersonas } from '../../app/servicios/servicio.persona';
 import { Cliente } from '../../app/Modelo/cliente';
+import { Entrenador } from '../../app/Modelo/entrenador';
 import { Alertas } from '../../app/componentes/alertas/alertas';
 import { Gimnasio } from '../../app/Modelo/gimnasio';
 
@@ -12,25 +13,37 @@ import { RegistrarUsuario } from '../../pages/registrarUsuario/registrarUsuario'
   selector: 'page-page1',
   templateUrl: 'page1.html'
 })
-export class Page1 {
+export class Page1 implements OnInit {
 
   constructor(public navCtrl: NavController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private alertas: Alertas) { }
 
-  usuario = '';
+  email = '';
   contrasena = '';
   habilitarBoton = false;
+  todosLosClientes;
+  todosLosEntrenadores;
+
+  ngOnInit(): void {
+    this.servicioPersonas.getTodosLosClientes().then((val) => {
+       this.todosLosClientes = val;
+    })
+    this.servicioPersonas.getTodosLosEntrenadores().then((val) => {
+       this.todosLosEntrenadores = val;
+    })
+  }
 
   iniciarSesion(): void {
-        console.log('todo mal');
-        this.alertas.mostrarAlerta('surgun', 'drule', 'OK');
-        this.usuario = '';
-        this.contrasena = '';
-        this.revisarCampos();
+    
+    // console.log('todo mal');
+    // this.alertas.mostrarAlerta('surgun', 'drule', 'OK');
+    // this.email = '';
+    // this.contrasena = '';
+    // this.revisarCampos();
   }
 
   registrarUsuario(): void {
-      this.usuario = '';
+      this.email = '';
       this.contrasena = '';
       this.revisarCampos();
       this.navCtrl.push(RegistrarUsuario);
@@ -39,7 +52,7 @@ export class Page1 {
   revisarCampos(): void {
     this.habilitarBoton = true;
 
-    if(this.usuario == '' || this.contrasena == '') {
+    if(this.email == '' || this.contrasena == '') {
         this.habilitarBoton = false;
         //fire up alert component
     }
@@ -63,15 +76,6 @@ agregarGimnasios(): void {
     gym2.nombre = 'Hercules';
     gym2.pais = 'Argentina';
     this.servicioPersonas.setGimnasio(gym2);
-
-    var gym3 = new Gimnasio();
-    gym3.barrio = 'Alberdi';
-    gym3.ciudad = 'Rrecoleta';
-    gym3.cp = 3003;
-    gym3.id = 2;
-    gym3.nombre = 'Gimnasium';
-    gym3.pais = 'Argentina';
-    this.servicioPersonas.setGimnasio(gym3);
 }
 
 mostrarGimnasios(): void {
@@ -85,7 +89,10 @@ eliminar(): void {
 }
 mostrar(): void {
     this.servicioPersonas.getTodosLosClientes().then((val) => {
-       console.log('LO MAS CLAVE DEL MUNDO MALLLLLLLLLL', val);
+       console.log('todos los clientes', val);
+     })
+    this.servicioPersonas.getTodosLosEntrenadores().then((val) => {
+       console.log('todos los entrenadores', val);
      })
 }
 

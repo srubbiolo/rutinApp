@@ -26,7 +26,8 @@ export class RegistrarUsuario implements OnInit{
   tipoUsuario;
   gimnasioDeUsuario: Gimnasio;
   sonPasswordsIguales;
-  sonDniOEmailDuplicados;
+  dniDuplicado;
+  emailDuplicado;
 
    miForm: FormGroup;
    infoUsuario: {nombre: string,
@@ -67,7 +68,8 @@ export class RegistrarUsuario implements OnInit{
     this.usuarioSeleccionado = true;
     this.datosCompletados = true;
     this.sonPasswordsIguales = false;
-    this.sonDniOEmailDuplicados = false;
+    this.dniDuplicado = false;
+    this.emailDuplicado = false;
     this.recargarGimnasios();
     this.cargarTodosLosUsuarios();
   }
@@ -83,15 +85,51 @@ export class RegistrarUsuario implements OnInit{
   }
 
   verificarDniDuplicado(): void {
-    var todosLosUsuarios = this.todosLosClientes.concat(this.todosLosEntrenadores);
+    //TODO: Ver que quede rojo también el field
+    var todosLosUsuarios;
+
+    if (this.todosLosEntrenadores == null) {
+      todosLosUsuarios = this.todosLosClientes;
+    } else if (this.todosLosClientes == null) {
+      todosLosUsuarios = this.todosLosEntrenadores;
+    } else if (this.todosLosClientes == null && this.todosLosEntrenadores == null) {
+      todosLosUsuarios = null;
+    } else {
+      todosLosUsuarios = this.todosLosClientes.concat(this.todosLosEntrenadores);
+    }
     console.log(todosLosUsuarios);
 
     var usuarioDuplicado = todosLosUsuarios.find(usuario => usuario.dni == this.infoUsuario.dni);
     console.log(usuarioDuplicado);
+
+    if (usuarioDuplicado !== undefined) {
+      this.dniDuplicado = true;
+    } else {
+      this.dniDuplicado = false;
+    }
   }
 
   verificarEmailDuplicado(): void {
-    var todosLosUsuarios = this.todosLosClientes.concat(this.todosLosEntrenadores);
+    //TODO: Ver que quede rojo también el field
+    var todosLosUsuarios;
+
+    if (this.todosLosEntrenadores == null) {
+      todosLosUsuarios = this.todosLosClientes;
+    } else if (this.todosLosClientes == null) {
+      todosLosUsuarios = this.todosLosEntrenadores;
+    } else if (this.todosLosClientes == null && this.todosLosEntrenadores == null) {
+      todosLosUsuarios = null;
+    } else {
+      todosLosUsuarios = this.todosLosClientes.concat(this.todosLosEntrenadores);
+    }
+
+    var usuarioDuplicado = todosLosUsuarios.find(usuario => usuario.email == this.infoUsuario.email);
+
+    if (usuarioDuplicado !== undefined) {
+      this.emailDuplicado = true;
+    } else {
+      this.emailDuplicado = false;
+    }
   }
 
   nombreValidator(control: FormControl): {[s: string]: boolean} {
