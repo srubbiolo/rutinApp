@@ -8,6 +8,7 @@ import { Alertas } from '../../app/componentes/alertas/alertas';
 import { Gimnasio } from '../../app/Modelo/gimnasio';
 
 import { RegistrarUsuario } from '../../pages/registrarUsuario/registrarUsuario';
+import { MainEntrenador } from '../../pages/mainEntrenador/mainEntrenador';
 
 @Component({
   selector: 'page-page1',
@@ -19,7 +20,7 @@ export class Page1 implements OnInit {
               private cliente: Cliente, private alertas: Alertas) { }
 
   email = '';
-  contrasena = '';
+  contrasenna = '';
   habilitarBoton = false;
   todosLosClientes;
   todosLosEntrenadores;
@@ -34,17 +35,38 @@ export class Page1 implements OnInit {
   }
 
   iniciarSesion(): void {
-    
-    // console.log('todo mal');
-    // this.alertas.mostrarAlerta('surgun', 'drule', 'OK');
-    // this.email = '';
-    // this.contrasena = '';
-    // this.revisarCampos();
+    var cliente = this.todosLosClientes.find(usuario => usuario.email == this.email),
+        entrenador = this.todosLosEntrenadores.find(usuario => usuario.email == this.email);
+    if (cliente !== undefined && entrenador === undefined) {
+      if (cliente.contraseña === this.contrasenna) {
+        console.log('tengo un cliente válido');
+        //redirigir apagina de cliente
+      } else {
+        this.contrasenna = '';
+        this.revisarCampos();
+        this.alertas.mostrarAlerta('Uuups!', 'Contraseña equivocada, inténtelo de nuevo', 'Ok');
+      }
+    } else if (cliente === undefined && entrenador !== undefined) {
+      if (entrenador.contraseña === this.contrasenna) {
+        console.log('tengo un entrenador válido');
+        //redirigir apagina de entrenador
+        this.navCtrl.push(MainEntrenador);
+      } else {
+        this.contrasenna = '';
+        this.revisarCampos();
+        this.alertas.mostrarAlerta('Uuups!', 'Contraseña equivocada, inténtelo de nuevo', 'Ok');
+      }
+    } else {
+      this.email = '';
+      this.contrasenna = '';
+      this.revisarCampos();
+      this.alertas.mostrarAlerta('Uuups!', 'Usuario no existente!', 'Ok');
+    }
   }
 
   registrarUsuario(): void {
       this.email = '';
-      this.contrasena = '';
+      this.contrasenna = '';
       this.revisarCampos();
       this.navCtrl.push(RegistrarUsuario);
   }
@@ -52,7 +74,7 @@ export class Page1 implements OnInit {
   revisarCampos(): void {
     this.habilitarBoton = true;
 
-    if(this.email == '' || this.contrasena == '') {
+    if(this.email == '' || this.contrasenna == '') {
         this.habilitarBoton = false;
         //fire up alert component
     }
