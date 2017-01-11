@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { ServicioPersonas } from '../../app/servicios/servicio.persona';
+import { ServicioLocal } from '../../app/servicios/servicio.local';
 import { Cliente } from '../../app/Modelo/cliente';
 import { Entrenador } from '../../app/Modelo/entrenador';
 import { Alertas } from '../../app/componentes/alertas/alertas';
@@ -17,7 +18,7 @@ import { MainEntrenador } from '../../pages/mainEntrenador/mainEntrenador';
 export class Page1 implements OnInit {
 
   constructor(public navCtrl: NavController, private servicioPersonas: ServicioPersonas,
-              private cliente: Cliente, private alertas: Alertas) { }
+              private cliente: Cliente, private alertas: Alertas, private servicioLocal: ServicioLocal) { }
 
   email = '';
   contrasenna = '';
@@ -40,6 +41,8 @@ export class Page1 implements OnInit {
     if (cliente !== undefined && entrenador === undefined) {
       if (cliente.contraseña === this.contrasenna) {
         console.log('tengo un cliente válido');
+        // this.servicioPersonas.setUsuarioIniciadoSesion(cliente);
+        // this.servicioLocal.setUsuarioRegistrado(cliente);
         //redirigir apagina de cliente
       } else {
         this.contrasenna = '';
@@ -49,6 +52,8 @@ export class Page1 implements OnInit {
     } else if (cliente === undefined && entrenador !== undefined) {
       if (entrenador.contraseña === this.contrasenna) {
         console.log('tengo un entrenador válido');
+        this.servicioPersonas.setUsuarioIniciadoSesion(entrenador);
+        this.servicioLocal.setUsuarioRegistrado(entrenador);
         //redirigir apagina de entrenador
         this.navCtrl.push(MainEntrenador);
       } else {

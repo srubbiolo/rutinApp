@@ -1,7 +1,6 @@
 import { Ejercicio } from './ejercicio';
 export class Rutina {
-    idEntrenador: number;
-    idCliente: number;
+    nombreRutina: String;
     tipoDeRutina: String;
     listaDeEjercicios: Ejercicio [];
 }

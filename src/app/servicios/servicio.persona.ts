@@ -7,7 +7,6 @@ import { Cliente } from '../Modelo/cliente';
 import { Entrenador } from '../Modelo/entrenador';
 import { Gimnasio } from '../Modelo/gimnasio';
 
-
 @Injectable()
 export class ServicioPersonas {
     //getHeroes(): Hero[] {
@@ -19,17 +18,24 @@ export class ServicioPersonas {
       var arrayUsuarios = [],
           usuario = (tipoUsuario == 'cliente') ? 'clientes' : 'entrenadores';
       this.storage.get(usuario).then((usuarios) => {
-        console.log(usuarios);
         if (usuarios == null) {
-          console.log('entro por aca == null');
            arrayUsuarios.push(dataUsuario);
         } else {
-          console.log('entro por aca else');
            arrayUsuarios = usuarios;
            arrayUsuarios.push(dataUsuario);
         }
         this.storage.set(usuario, arrayUsuarios);
       })
+    }
+
+    setUsuarioIniciadoSesion(dataUsuario: any): void {
+      var objetoUsuario = {sesionIniciada: true, datosDeUsuario: dataUsuario};
+      this.storage.set('usuario', objetoUsuario);
+    }
+
+    logOut(): void {
+      var objetoUsuario = {sesionIniciada: false, datosDeUsuario: {}};
+      this.storage.set('usuario', objetoUsuario)
     }
 
     setGimnasio(gimnasio: Gimnasio): void {

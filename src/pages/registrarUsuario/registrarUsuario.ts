@@ -4,6 +4,7 @@ import { Component , OnInit} from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { ServicioPersonas } from '../../app/servicios/servicio.persona';
+import { ServicioLocal } from '../../app/servicios/servicio.local';
 import { Cliente } from '../../app/Modelo/cliente';
 import { Entrenador } from '../../app/Modelo/entrenador';
 import { Gimnasio } from '../../app/Modelo/gimnasio';
@@ -50,7 +51,8 @@ export class RegistrarUsuario implements OnInit{
 
   constructor(public navCtrl: NavController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private alertas: Alertas, private entrenador: Entrenador,
-              private gimnasio: Gimnasio, public formBuilder: FormBuilder) {
+              private gimnasio: Gimnasio, public formBuilder: FormBuilder,
+              private servicioLocal: ServicioLocal) {
     this.miForm = this.formBuilder.group({
       'nombre': ['', [Validators.required, this.nombreValidator.bind(this)]],
       'apellido': ['', [Validators.required, this.nombreValidator.bind(this)]],
@@ -196,9 +198,11 @@ export class RegistrarUsuario implements OnInit{
     usuario.fechaNacimiento = new Date(this.infoUsuario.fechaDeNacimiento);
     usuario.telefono = parseInt(this.infoUsuario.telefono);
     // TODO: si es usuario agregar en caso que haya seleccionado un entrenador
-    (this.tipoUsuario == 'cliente') ? this.servicioPersonas.setUsuario(usuario, 'cliente') : 
+    (this.tipoUsuario == 'cliente') ? this.servicioPersonas.setUsuario(usuario, 'cliente') :
                                       this.servicioPersonas.setUsuario(usuario, 'entrenador');
-    //this.navCtrl.push(lugar dodne voy a ir);
+    // this.servicioPersonas.setUsuarioIniciadoSesion(usuario);
+    // this.servicioLocal.setUsuarioRegistrado(usuario);
+    // this.tipoUsuario == 'cliente') ? this.navCtrl.push(MainCliente) : this.navCtrl.push(MainEntrenador);
 
   }
 
