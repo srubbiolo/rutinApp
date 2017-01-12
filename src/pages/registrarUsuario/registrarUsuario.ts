@@ -198,11 +198,18 @@ export class RegistrarUsuario implements OnInit{
     usuario.fechaNacimiento = new Date(this.infoUsuario.fechaDeNacimiento);
     usuario.telefono = parseInt(this.infoUsuario.telefono);
     // TODO: si es usuario agregar en caso que haya seleccionado un entrenador
-    (this.tipoUsuario == 'cliente') ? this.servicioPersonas.setUsuario(usuario, 'cliente') :
-                                      this.servicioPersonas.setUsuario(usuario, 'entrenador');
-    // this.servicioPersonas.setUsuarioIniciadoSesion(usuario);
-    // this.servicioLocal.setUsuarioRegistrado(usuario);
-    // this.tipoUsuario == 'cliente') ? this.navCtrl.push(MainCliente) : this.navCtrl.push(MainEntrenador);
+
+    if (this.tipoUsuario == 'cliente') {
+      this.servicioPersonas.setUsuario(usuario, 'cliente');
+      // this.servicioPersonas.setUsuarioIniciadoSesion(usuario, 'cliente');
+      // this.servicioLocal.setUsuarioRegistrado(usuario);
+      //this.navCtrl.push(MainCliente)
+    } else {
+      this.servicioPersonas.setUsuario(usuario, 'entrenador')
+      // this.servicioPersonas.setUsuarioIniciadoSesion(usuario, 'entrenador');
+      // this.servicioLocal.setUsuarioRegistrado(usuario);
+      //this.navCtrl.push(MainEntrenador)
+    }
 
   }
 

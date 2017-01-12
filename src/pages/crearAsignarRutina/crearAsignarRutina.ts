@@ -11,10 +11,10 @@ import { Alertas } from '../../app/componentes/alertas/alertas';
 import { Page1 } from '../../pages/page1/page1';
 
 @Component({
-  selector: 'main-entrenador',
-  templateUrl: 'mainEntrenador.html'
+  selector: 'crear-asignar-rutina',
+  templateUrl: 'crearAsignarRutina.html'
 })
-export class MainEntrenador implements OnInit {
+export class CrearAsignarRutina implements OnInit {
 
   constructor(public navCtrl: NavController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private alertas: Alertas, private entrenador: Entrenador,

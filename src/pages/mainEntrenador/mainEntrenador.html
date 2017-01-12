@@ -1,12 +1,18 @@
 <ion-header>
     <ion-navbar hideBackButton>
     <ion-title>Menu Principal</ion-title>
+    <button ion-button small color="secondary" (click)="salir()">Salir</button>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Hola XXXX</h3>
+  <h3>Hola {{infoDeEntrenador.nombre}}</h3>
+  <h4>Fulanitos pidieron rutina</h4>
+  <h4>Pedritos completaron rutina</h4>
+  <h4>boton listar entrenados por yo</h4>
   <!-- usted tiene clientes que requieren rutina,
   usted tiene clientes que presentan avance de rutina -->
+  <button ion-button large>Seguir Clientes</button>
+  <button ion-button large>Crear/Asignar Rutinas</button>
 
 </ion-content>

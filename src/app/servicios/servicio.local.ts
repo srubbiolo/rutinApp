@@ -12,4 +12,8 @@ export class ServicioLocal {
     getUsuarioRegistrado() {
         return this.usuarioRegistrado;
     }
+
+    limpiarUsuario() {
+        this.usuarioRegistrado = null;
+    }
 }

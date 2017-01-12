@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar hideBackButton>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <h3>RutinApp</h3>
 <ion-list>
   <ion-item>
     <ion-label color="primary" floating>Correo electrónico</ion-label>
@@ -26,7 +26,7 @@
   <button ion-button secondary menuToggle>Toggle Menu</button>
   <button ion-button color="secondary" (click)="eliminar()">Eliminar todo</button>
 <button ion-button color="dark"(click)="mostrar()">mostrar todo</button>
-
+<button ion-button color="dark"(click)="cargar1y1()">Cargar un entrenador y un cliente</button>
 <button ion-button color="danger" (click)="agregarGimnasios()">Agregar gimnasios</button>
 <button ion-button color="dark"(click)="mostrarGimnasios()">Mostrar gimnasios</button>
 </ion-content>

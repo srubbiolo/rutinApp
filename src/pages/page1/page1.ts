@@ -27,21 +27,38 @@ export class Page1 implements OnInit {
   todosLosEntrenadores;
 
   ngOnInit(): void {
+    this.servicioPersonas.getUsuarioIniciadoSesion().then((val) => {
+      console.log(val);
+      if(val.sesionIniciada) {
+        if (val.claseUsuario == 'cliente') {
+          // this.servicioLocal.setUsuarioRegistrado(val.datosDeUsuario);
+          // this.navCtrl.push(MainCliente);
+        } else if (val.claseUsuario == 'entrenador') {
+          this.servicioLocal.setUsuarioRegistrado(val.datosDeUsuario);
+          this.navCtrl.push(MainEntrenador);
+        }
+      }
+    })
+    .catch((err) => {
+      this.servicioPersonas.logOut();
+      console.log('primera vez que se entra en este dispositivo');
+    })
     this.servicioPersonas.getTodosLosClientes().then((val) => {
-       this.todosLosClientes = val;
+      this.todosLosClientes = val;
     })
     this.servicioPersonas.getTodosLosEntrenadores().then((val) => {
-       this.todosLosEntrenadores = val;
+      this.todosLosEntrenadores = val;
     })
   }
 
   iniciarSesion(): void {
+    console.log('esto valen todos los clientes', this.todosLosClientes);
     var cliente = this.todosLosClientes.find(usuario => usuario.email == this.email),
         entrenador = this.todosLosEntrenadores.find(usuario => usuario.email == this.email);
     if (cliente !== undefined && entrenador === undefined) {
       if (cliente.contraseña === this.contrasenna) {
         console.log('tengo un cliente válido');
-        // this.servicioPersonas.setUsuarioIniciadoSesion(cliente);
+        // this.servicioPersonas.setUsuarioIniciadoSesion(cliente, 'cliente');
         // this.servicioLocal.setUsuarioRegistrado(cliente);
         //redirigir apagina de cliente
       } else {
@@ -52,7 +69,7 @@ export class Page1 implements OnInit {
     } else if (cliente === undefined && entrenador !== undefined) {
       if (entrenador.contraseña === this.contrasenna) {
         console.log('tengo un entrenador válido');
-        this.servicioPersonas.setUsuarioIniciadoSesion(entrenador);
+        this.servicioPersonas.setUsuarioIniciadoSesion(entrenador, 'entrenador');
         this.servicioLocal.setUsuarioRegistrado(entrenador);
         //redirigir apagina de entrenador
         this.navCtrl.push(MainEntrenador);
@@ -114,6 +131,7 @@ mostrarGimnasios(): void {
 eliminar(): void {
     this.servicioPersonas.eliminarTodo();
 }
+
 mostrar(): void {
     this.servicioPersonas.getTodosLosClientes().then((val) => {
        console.log('todos los clientes', val);
@@ -121,6 +139,39 @@ mostrar(): void {
     this.servicioPersonas.getTodosLosEntrenadores().then((val) => {
        console.log('todos los entrenadores', val);
      })
+}
+
+cargar1y1(): void {
+  var cliente = new Cliente;
+  var entrenador = new Entrenador;
+  var gym = new Gimnasio;
+  gym.barrio = 'Nuñez';
+  gym.ciudad = 'Capital Federal';
+  gym.cp = 2333; 
+  gym.id = 1; 
+  gym.nombre = 'Gym River Plate';
+  gym.pais = 'Argentina';
+
+  cliente.nombre = 'Santiago';
+  cliente.apellido = 'Rubbiolo';
+  cliente.dni = 34315653;
+  cliente.email = 'rubbiolo@gmail.com';
+  cliente.gimnasio = gym;
+  entrenador.contraseña = 'itnas1';
+  entrenador.fechaNacimiento = new Date('11-4-1989');
+  entrenador.telefono = 3516775504;
+
+  entrenador.nombre = 'Federico';
+  entrenador.apellido = 'Ussei';
+  entrenador.dni = 34315654;
+  entrenador.email = 'fede@gmail.com';
+  entrenador.gimnasio = gym;
+  entrenador.contraseña = 'fede1';
+  entrenador.fechaNacimiento = new Date('2-5-1988');
+  entrenador.telefono = 3516775505;
+
+  this.servicioPersonas.setUsuario(cliente, 'cliente');
+  this.servicioPersonas.setUsuario(entrenador, 'entrenador');
 }
 
 

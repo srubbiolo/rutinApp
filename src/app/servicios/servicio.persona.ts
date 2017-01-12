@@ -9,9 +9,6 @@ import { Gimnasio } from '../Modelo/gimnasio';
 
 @Injectable()
 export class ServicioPersonas {
-    //getHeroes(): Hero[] {
-        //return HEROES;      NOT PROMISE
-    //}
     constructor(private storage: Storage, private gimnasio: Gimnasio) { }
 
     setUsuario(dataUsuario: any, tipoUsuario: string): void {
@@ -28,9 +25,13 @@ export class ServicioPersonas {
       })
     }
 
-    setUsuarioIniciadoSesion(dataUsuario: any): void {
-      var objetoUsuario = {sesionIniciada: true, datosDeUsuario: dataUsuario};
+    setUsuarioIniciadoSesion(dataUsuario: any, tipoUsuario: String): void {
+      var objetoUsuario = {sesionIniciada: true, datosDeUsuario: dataUsuario, claseUsuario: tipoUsuario};
       this.storage.set('usuario', objetoUsuario);
+    }
+
+    getUsuarioIniciadoSesion(): any {
+      return this.storage.get('usuario');
     }
 
     logOut(): void {
