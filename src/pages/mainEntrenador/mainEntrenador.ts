@@ -9,6 +9,7 @@ import { Gimnasio } from '../../app/Modelo/gimnasio';
 import { Alertas } from '../../app/componentes/alertas/alertas';
 
 import { Page1 } from '../../pages/page1/page1';
+import { CrearAsignarRutina} from '../../pages/crearAsignarRutina/crearAsignarRutina';
 
 @Component({
   selector: 'main-entrenador',
@@ -29,5 +30,9 @@ export class MainEntrenador implements OnInit {
     this.servicioLocal.limpiarUsuario();  
     this.servicioPersonas.logOut();
     setTimeout(() => { this.navCtrl.push(Page1) }, 100);
+  }
+
+  crearAsignarRutina(): void {
+    this.navCtrl.push(CrearAsignarRutina);
   }
 }

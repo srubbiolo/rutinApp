@@ -14,6 +14,7 @@ import { Entrenador } from '../app/Modelo/entrenador'
 import { Gimnasio } from '../app/Modelo/gimnasio';
 import { ServicioLocal } from '../app/servicios/servicio.local';
 import { Alertas } from '../app/componentes/alertas/alertas';
+import { CrearEjercicio } from '../app/componentes/crearEjercicio/crearEjercicio';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { Alertas } from '../app/componentes/alertas/alertas';
     Page2,
     RegistrarUsuario,
     MainEntrenador,
-    CrearAsignarRutina
+    CrearAsignarRutina,
+    CrearEjercicio
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -34,7 +36,8 @@ import { Alertas } from '../app/componentes/alertas/alertas';
     Page2,
     RegistrarUsuario,
     MainEntrenador,
-    CrearAsignarRutina
+    CrearAsignarRutina,
+    CrearEjercicio
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
               Storage, ServicioPersonas, Cliente, ServicioLocal, Alertas, Entrenador,

@@ -1,5 +1,7 @@
+import { Entrenador } from './entrenador';
+
 export class Ejercicio {
-    id: number;
+    creador: Entrenador;
     nombre: String;
     repeticiones: number;
     series:number;
