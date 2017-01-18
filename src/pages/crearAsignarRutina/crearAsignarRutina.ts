@@ -33,8 +33,8 @@ export class CrearAsignarRutina implements OnInit {
   }
 
   crearEjercicio(): void {
-    let profileModal = this.modal.create(CrearEjercicio, {});
-   profileModal.present();
+    let profileModal = this.modal.create(CrearEjercicio);
+    profileModal.present();
   }
 
   crearRutina(): void {
@@ -44,7 +44,6 @@ export class CrearAsignarRutina implements OnInit {
   asignarRutina(): void {
 
   }
-
 }
 //   @Component({
 //   selector: 'agregar-ejercicio',

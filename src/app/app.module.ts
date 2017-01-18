@@ -12,6 +12,7 @@ import { ServicioPersonas} from '../app/servicios/servicio.persona';
 import { Cliente } from '../app/Modelo/cliente';
 import { Entrenador } from '../app/Modelo/entrenador'
 import { Gimnasio } from '../app/Modelo/gimnasio';
+import { Ejercicio } from '../app/Modelo/ejercicio';
 import { ServicioLocal } from '../app/servicios/servicio.local';
 import { Alertas } from '../app/componentes/alertas/alertas';
 import { CrearEjercicio } from '../app/componentes/crearEjercicio/crearEjercicio';
@@ -41,6 +42,6 @@ import { CrearEjercicio } from '../app/componentes/crearEjercicio/crearEjercicio
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
               Storage, ServicioPersonas, Cliente, ServicioLocal, Alertas, Entrenador,
-              Gimnasio]
+              Gimnasio, Ejercicio]
 })
 export class AppModule {}
