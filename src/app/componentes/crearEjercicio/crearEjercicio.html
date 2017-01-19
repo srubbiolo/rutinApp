@@ -45,6 +45,7 @@
     </ion-item>
     <p *ngIf="!isValid('descripcion')" color="danger" padding-left>Ingrese una breve descripción del ejercicio</p>
 
+    <button ion-button (click)="tuVieja()">TU VIEJA</button>
     <button ion-button type="submit" [disabled]="!miForm.valid">Crear Ejercicio</button>
 </form>
 </ion-content>

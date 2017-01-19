@@ -45,13 +45,3 @@ export class CrearAsignarRutina implements OnInit {
 
   }
 }
-//   @Component({
-//   selector: 'agregar-ejercicio',
-//   template: `
-//   <ion-content padding>
-//     <h1>cosillo</h1>
-//   </ion-content>`
-// })
-//   class CrearEjercicio {
-
-//   }

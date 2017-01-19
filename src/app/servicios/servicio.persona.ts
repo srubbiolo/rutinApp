@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
-
-import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { Cliente } from '../Modelo/cliente';
 import { Entrenador } from '../Modelo/entrenador';
 import { Gimnasio } from '../Modelo/gimnasio';
+import { ServicioLocal } from './servicio.local';
 
 @Injectable()
 export class ServicioPersonas {
-    constructor(private storage: Storage, private gimnasio: Gimnasio) { }
+    constructor(private storage: Storage, private gimnasio: Gimnasio,
+                private servicioLocal: ServicioLocal) { }
 
     setUsuario(dataUsuario: any, tipoUsuario: string): void {
       var arrayUsuarios = [],
@@ -22,6 +21,37 @@ export class ServicioPersonas {
            arrayUsuarios.push(dataUsuario);
         }
         this.storage.set(usuario, arrayUsuarios);
+      })
+    }
+
+    actualizarUsuario(): void {
+      var promesaCliente = this.getTodosLosClientes(),
+          promesaEntrenador = this.getTodosLosEntrenadores(),
+          nuevoArrayClientes = [],
+          nuevoArrayEntrenadores = [],
+          cantidadDeClientes = null,
+          cantidadDeEntrenadores = null,
+          usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+      Promise.all([promesaCliente, promesaEntrenador]).then(val => {
+        cantidadDeClientes = val[0].length;
+        cantidadDeEntrenadores = val[1].length;
+
+        nuevoArrayClientes = val[0].filter(elemento =>{
+          return elemento.email !== usuarioRegistrado.email
+        })
+
+        nuevoArrayEntrenadores = val[1].filter(elemento =>{
+          return elemento.email !== usuarioRegistrado.email
+        })
+
+        if (nuevoArrayClientes.length === cantidadDeClientes) {
+          nuevoArrayEntrenadores.push(usuarioRegistrado);
+          this.storage.set('entrenadores', nuevoArrayEntrenadores);
+        } else {
+          nuevoArrayClientes.push(usuarioRegistrado);
+          this.storage.set('clientes', nuevoArrayClientes);
+        }
+
       })
     }
 

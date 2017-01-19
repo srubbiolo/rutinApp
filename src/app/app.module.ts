@@ -9,6 +9,7 @@ import { MainEntrenador} from '../pages/mainEntrenador/mainEntrenador';
 import { CrearAsignarRutina } from '../pages/crearAsignarRutina/crearAsignarRutina';
 
 import { ServicioPersonas} from '../app/servicios/servicio.persona';
+import { ServicioEjercicios} from '../app/servicios/servicio.ejercicio';
 import { Cliente } from '../app/Modelo/cliente';
 import { Entrenador } from '../app/Modelo/entrenador'
 import { Gimnasio } from '../app/Modelo/gimnasio';
@@ -42,6 +43,6 @@ import { CrearEjercicio } from '../app/componentes/crearEjercicio/crearEjercicio
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
               Storage, ServicioPersonas, Cliente, ServicioLocal, Alertas, Entrenador,
-              Gimnasio, Ejercicio]
+              Gimnasio, Ejercicio, ServicioEjercicios]
 })
 export class AppModule {}
