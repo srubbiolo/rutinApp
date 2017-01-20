@@ -1,7 +1,7 @@
 import { Entrenador } from './entrenador';
 
 export class Ejercicio {
-    creador: Entrenador;
+    emailDelCreador: String;
     nombre: String;
     repeticiones: number;
     series:number;

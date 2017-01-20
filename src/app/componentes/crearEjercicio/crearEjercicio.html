@@ -7,45 +7,44 @@
 <form [formGroup]="miForm" (ngSubmit)="onSubmit()">
     <ion-item>
         <ion-label color="primary" floating>Nombre</ion-label>
-        <ion-input [(ngModel)]="infoUsuario.nombre" formControlName="nombre" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoEjercicio.nombre" formControlName="nombre" type="text"></ion-input>
     </ion-item>
     <p *ngIf="!isValid('nombre')" color="danger" padding-left>Inserte nombre o verifique el campo ingresado</p>
 
     <ion-item>
         <ion-label color="primary" floating>Repeticiones</ion-label>
-        <ion-input [(ngModel)]="infoUsuario.repeticiones" formControlName="repeticiones" type="tel"></ion-input>
+        <ion-input [(ngModel)]="infoEjercicio.repeticiones" formControlName="repeticiones" type="tel"></ion-input>
     </ion-item>
     <p *ngIf="!isValid('repeticiones')" color="danger" padding-left>Inserte repeticiones o verifique el campo ingresado"</p>
 
     <ion-item>
         <ion-label color="primary" floating>Series</ion-label>
-        <ion-input [(ngModel)]="infoUsuario.series" formControlName="series" type="tel"></ion-input>
+        <ion-input [(ngModel)]="infoEjercicio.series" formControlName="series" type="tel"></ion-input>
     </ion-item>
     <p *ngIf="!isValid('series')" color="danger" padding-left>Ingrese el número de series del ejercicio</p>
 
     <ion-item>
         <ion-label color="primary" floating>Peso recomendado</ion-label>
-        <ion-input [(ngModel)]="infoUsuario.peso" formControlName="peso" type="tel"></ion-input>
+        <ion-input [(ngModel)]="infoEjercicio.peso" formControlName="peso" type="tel"></ion-input>
     </ion-item>
     <p *ngIf="!isValid('peso')" color="danger" padding-left>Ingrese el peso recomendado</p>
 
     <ion-item>
         <ion-label color="primary" floating>¿Es combinado?</ion-label>
-        <ion-select [(ngModel)]="infoUsuario.esCombinado" formControlName="esCombinado">
+        <ion-select [(ngModel)]="infoEjercicio.esCombinado" formControlName="esCombinado">
 		    <ion-option value="false">No</ion-option>
 		    <ion-option value="true">Si</ion-option>
   		</ion-select>
-  
+
     </ion-item>
     <p *ngIf="!isValid('esCombinado')" color="danger" padding-left>Ingrese si el ejercicio es combinado o no</p>
 
     <ion-item>
         <ion-label color="primary" floating>Descripción del ejercicio</ion-label>
-        <ion-input [(ngModel)]="infoUsuario.descripcion" formControlName="descripcion" type="text"></ion-input>
+        <ion-input [(ngModel)]="infoEjercicio.descripcion" formControlName="descripcion" type="text"></ion-input>
     </ion-item>
     <p *ngIf="!isValid('descripcion')" color="danger" padding-left>Ingrese una breve descripción del ejercicio</p>
 
-    <button ion-button (click)="tuVieja()">TU VIEJA</button>
     <button ion-button type="submit" [disabled]="!miForm.valid">Crear Ejercicio</button>
 </form>
 </ion-content>

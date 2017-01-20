@@ -17,8 +17,10 @@ entrenador = this.servicioLocal.getUsuarioRegistrado();
       var arrayEjercicios = [];
       this.storage.get('ejercicios').then((ejercicios) => {
         if (ejercicios == null) {
+          console.log('entro por == null EJERCICIOS');
            arrayEjercicios.push(ejercicio);
         } else {
+          console.log('entro por else EJERCICIOS', ejercicios);
            arrayEjercicios = ejercicios;
            arrayEjercicios.push(ejercicio);
         }
@@ -40,9 +42,11 @@ entrenador = this.servicioLocal.getUsuarioRegistrado();
     cargarEjercicioAlEntrenador(ejercicio: Ejercicio): void {
       var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
       var listaDeEjercicios = [];
-      if (usuarioRegistrado.hasOwnProperty(listaDeEjercicios)) {
+      if (usuarioRegistrado.hasOwnProperty('listaDeEjercicios')) {
+        console.log('entro por hasownproperty TRUE');
         usuarioRegistrado.listaDeEjercicios.push(ejercicio);
       } else {
+        console.log('entro por false en hasownproperty');
         usuarioRegistrado.listaDeEjercicios = [];
         usuarioRegistrado.listaDeEjercicios.push(ejercicio);
       }

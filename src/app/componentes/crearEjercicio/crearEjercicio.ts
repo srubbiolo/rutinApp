@@ -18,11 +18,11 @@ import { Gimnasio } from '../../Modelo/gimnasio';
 export class CrearEjercicio {
 
   miForm: FormGroup;
-  infoUsuario: {nombre: string,
+  infoEjercicio: {nombre: string,
                 repeticiones: string,
                 series: string,
                 peso: string,
-                esCombinado: boolean,
+                esCombinado: string,
                 descripcion: string
                 } = {
                 nombre: '',
@@ -56,11 +56,18 @@ export class CrearEjercicio {
       return formField.valid || formField.pristine;
   }
 
-  tuVieja(): void {
-    this.servicioPersonas.actualizarUsuario();
-  }
-
   onSubmit() {
+    var ejercicio = new Ejercicio;
+    var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+    ejercicio.emailDelCreador = usuarioRegistrado.email;
+    ejercicio.nombre = this.infoEjercicio.nombre;
+    ejercicio.repeticiones = parseInt(this.infoEjercicio.repeticiones);
+    ejercicio.series = parseInt(this.infoEjercicio.series);
+    ejercicio.peso = parseInt(this.infoEjercicio.peso);
+    ejercicio.esCombinado = (this.infoEjercicio.esCombinado == 'true') ? true : false;
+    ejercicio.descripcion = this.infoEjercicio.descripcion;
+    this.servicioEjercicios.setEjercicio(ejercicio);
+    this.viewCtrl.dismiss();
 
   }
 }
