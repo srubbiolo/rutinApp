@@ -1,0 +1,31 @@
+<ion-toolbar>
+    <ion-title>Crear Ejercicio</ion-title>
+    <ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
+</ion-toolbar>
+<ion-content padding>
+<h1>tu vieja</h1>
+    <button ion-button *ngIf="ejerciciosTodos" (click)="cambiarLista()">Cambiar a ejercicios mios</button>
+    <button ion-button *ngIf="ejerciciosUsuario" (click)="cambiarLista()">Cambiar a ejercicios de todos</button>
+    <ion-list *ngIf="ejerciciosTodos">
+    <ion-list-header>Ejercicios de todos los entrenadores</ion-list-header>
+      <button ion-item *ngFor="let ejercicio of todosLosEjercicios" (click)="agregarEjercicio(ejercicio)">
+        {{ ejercicio.nombre }}
+      </button>
+    </ion-list>
+
+    <ion-list *ngIf="ejerciciosUsuario">
+    <ion-list-header>Ejercicios creados por mi</ion-list-header>
+      <button ion-item *ngFor="let ejercicio of todosLosEjerciciosDelEntrenador" (click)="agregarEjercicio(ejercicio)">
+        {{ ejercicio.nombre }}
+      </button>
+    </ion-list>
+
+    <ion-list *ngIf="rutinaActual.length != 0">
+    <ion-list-header>Nueva Rutina</ion-list-header>
+      <button ion-item *ngFor="let ejercicio of rutinaActual" (click)="removerEjercicio(ejercicio)">
+        {{ ejercicio.nombre }}
+      </button>
+    </ion-list>
+
+<button ion-button (click)="cerrarModal()">Cancelar</button>
+</ion-content>

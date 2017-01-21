@@ -1,3 +1,4 @@
+//TODO: falta validar los campos de este form, o mas facil, poner spinners para seleccionar data
 import { Component, Input, OnInit } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';

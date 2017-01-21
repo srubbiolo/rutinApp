@@ -8,6 +8,7 @@ import { Entrenador } from '../../app/Modelo/entrenador';
 import { Gimnasio } from '../../app/Modelo/gimnasio';
 import { Alertas } from '../../app/componentes/alertas/alertas';
 import { CrearEjercicio } from '../../app/componentes/crearEjercicio/crearEjercicio';
+import { CrearRutina } from '../../app/componentes/crearRutina/crearRutina';
 
 import { Page1 } from '../../pages/page1/page1';
 
@@ -27,7 +28,7 @@ export class CrearAsignarRutina implements OnInit {
   }
 
   salir(): void {
-    this.servicioLocal.limpiarUsuario();  
+    this.servicioLocal.limpiarUsuario();
     this.servicioPersonas.logOut();
     setTimeout(() => { this.navCtrl.push(Page1) }, 100);
   }
@@ -38,7 +39,8 @@ export class CrearAsignarRutina implements OnInit {
   }
 
   crearRutina(): void {
-
+    let profileModal = this.modal.create(CrearRutina);
+    profileModal.present();
   }
 
   asignarRutina(): void {
