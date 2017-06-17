@@ -1,4 +1,3 @@
-//TODO: falta validar los campos de este form, o mas facil, poner spinners para seleccionar data
 import { Component, Input, OnInit } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -20,17 +19,23 @@ export class CrearEjercicio {
 
   miForm: FormGroup;
   infoEjercicio: {nombre: string,
-                repeticiones: string,
-                series: string,
-                peso: string,
+                series: number,
+                repeticiones: number,
+                peso: number,
                 esCombinado: string,
+                descarga: string,
+                cambioPeso: number,
+                cambioRepeticiones: number,
                 descripcion: string
                 } = {
                 nombre: '',
-                repeticiones: '',
-                series: '',
-                peso: '',
+                series: 1,
+                repeticiones: 0,
+                peso: 0,
                 esCombinado: null,
+                descarga: '',
+                cambioPeso: 0,
+                cambioRepeticiones: 0,
                 descripcion: ''};
 
   constructor(public viewCtrl: ViewController, private servicioPersonas: ServicioPersonas,
@@ -40,12 +45,21 @@ export class CrearEjercicio {
               private servicioEjercicios: ServicioEjercicios) {
     this.miForm = this.formBuilder.group({
       'nombre': ['', [Validators.required]],
-      'repeticiones': ['', [Validators.required]],
-      'series': ['', [Validators.required]],
-      'peso': ['', [Validators.required]],
+      'series': ['',],
+      'repeticiones': ['', [Validators.required, this.repeticionesValidator.bind(this)]],
+      'peso': ['',],
+      'descarga': ['', [Validators.required]],
+      'cambioRepeticiones': ['',],
+      'cambioPeso': ['',],
       'esCombinado': ['', [Validators.required]],
       'descripcion': ['', [Validators.required]]
     });
+  }
+
+  repeticionesValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value == 0 || control.value == null) {
+        return {invalidRepeticiones: true};
+    }
   }
 
   cerrarModal(): void {
@@ -62,13 +76,17 @@ export class CrearEjercicio {
     var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
     ejercicio.emailDelCreador = usuarioRegistrado.email;
     ejercicio.nombre = this.infoEjercicio.nombre;
-    ejercicio.repeticiones = parseInt(this.infoEjercicio.repeticiones);
-    ejercicio.series = parseInt(this.infoEjercicio.series);
-    ejercicio.peso = parseInt(this.infoEjercicio.peso);
+    ejercicio.repeticiones = this.infoEjercicio.repeticiones;
+    ejercicio.series = this.infoEjercicio.series;
+    ejercicio.peso = this.infoEjercicio.peso;
+    ejercicio.descarga = this.infoEjercicio.descarga;
+    ejercicio.cambioRepeticiones = (this.infoEjercicio.descarga === 'noCambio' ||
+      this.infoEjercicio.descarga === 'cambioPeso') ? 0 : this.infoEjercicio.cambioRepeticiones;
+    ejercicio.cambioPeso = (this.infoEjercicio.descarga === 'noCambio' ||
+      this.infoEjercicio.descarga === 'cambioRepeticiones') ? 0 : this.infoEjercicio.cambioPeso;
     ejercicio.esCombinado = (this.infoEjercicio.esCombinado == 'true') ? true : false;
     ejercicio.descripcion = this.infoEjercicio.descripcion;
     this.servicioEjercicios.setEjercicio(ejercicio);
     this.viewCtrl.dismiss();
-
   }
 }

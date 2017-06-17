@@ -1,31 +1,62 @@
 <ion-toolbar>
-    <ion-title>Crear Ejercicio</ion-title>
+    <ion-title>Crear Rutina</ion-title>
     <ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
 </ion-toolbar>
 <ion-content padding>
-<h1>tu vieja</h1>
-    <button ion-button *ngIf="ejerciciosTodos" (click)="cambiarLista()">Cambiar a ejercicios mios</button>
+<div class="seleccion-numero-dias" *ngIf="infoRutina.numeroDeDias === null">
+  <h1 class="tituloDePagina">Días de la rutina</h1>
+  <ion-item>
+    <ion-label color="primary" floating>Seleccione el Número de días de la rutina</ion-label>
+    <ion-select interface="action-sheet" cancelText="Cancelar" [(ngModel)]="infoRutina.numeroDeDias" (ionChange)="seleccionoDias()">
+        <ion-option value="1">Uno    - 1</ion-option>
+        <ion-option value="2">Dos    - 2</ion-option>
+        <ion-option value="3">Tres   - 3</ion-option>
+        <ion-option value="4">Cuatro - 4</ion-option>
+        <ion-option value="5">Cinco  - 5</ion-option>
+        <ion-option value="6">Seis   - 6</ion-option>
+        <ion-option value="7">Siete  - 7</ion-option>
+    </ion-select>
+  </ion-item>
+</div>
+<div class="slides-de-dias">
+  <ion-slides pager>
+    <ion-slide *ngFor="let dia of arrayDeDias; let i=index">
+        <ion-buttons end>
+          <button ion-button color="primary">Próximo día</button>
+        </ion-buttons>
+        <ion-item>
+          <ion-label color="primary" floating>Nombre del dia</ion-label>
+          <ion-input type="text" [(ngModel)]="arrayDeDias[i].titulo" (ionChange)="cambioElNombreDe(i)"></ion-input>
+        </ion-item>
+      <h2 class="slide-title" [innerHTML]="arrayDeDias[i].titulo">dia</h2>
+      <p [innerHTML]="infoRutina.descripcion"></p>
+
+      <button ion-button *ngIf="ejerciciosTodos" (click)="cambiarLista()">Cambiar a ejercicios mios</button>
     <button ion-button *ngIf="ejerciciosUsuario" (click)="cambiarLista()">Cambiar a ejercicios de todos</button>
     <ion-list *ngIf="ejerciciosTodos">
     <ion-list-header>Ejercicios de todos los entrenadores</ion-list-header>
-      <button ion-item *ngFor="let ejercicio of todosLosEjercicios" (click)="agregarEjercicio(ejercicio)">
+      <button ion-item *ngFor="let ejercicio of arrayDeDias[i].ejerciciosDeTodos" (click)="agregarEjercicio(ejercicio, i)">
         {{ ejercicio.nombre }}
       </button>
     </ion-list>
 
     <ion-list *ngIf="ejerciciosUsuario">
     <ion-list-header>Ejercicios creados por mi</ion-list-header>
-      <button ion-item *ngFor="let ejercicio of todosLosEjerciciosDelEntrenador" (click)="agregarEjercicio(ejercicio)">
+      <button ion-item *ngFor="let ejercicio of arrayDeDias[i].ejerciciosDelEntrenador" (click)="agregarEjercicio(ejercicio, i)">
         {{ ejercicio.nombre }}
       </button>
     </ion-list>
 
-    <ion-list *ngIf="rutinaActual.length != 0">
+    <ion-list *ngIf="arrayDeDias[i].ejerciciosDeLaRutina.length != 0">
     <ion-list-header>Nueva Rutina</ion-list-header>
-      <button ion-item *ngFor="let ejercicio of rutinaActual" (click)="removerEjercicio(ejercicio)">
+      <button ion-item *ngFor="let ejercicio of arrayDeDias[i].ejerciciosDeLaRutina" (click)="removerEjercicio(ejercicio, i)">
         {{ ejercicio.nombre }}
       </button>
     </ion-list>
+
+    </ion-slide>
+  </ion-slides>
+</div>
 
 <button ion-button (click)="cerrarModal()">Cancelar</button>
 </ion-content>

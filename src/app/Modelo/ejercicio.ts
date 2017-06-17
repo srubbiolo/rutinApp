@@ -6,6 +6,9 @@ export class Ejercicio {
     repeticiones: number;
     series:number;
     peso: number;
+    descarga: String;
+    cambioPeso: number; //cero para ningun cambio en peso
+    cambioRepeticiones: number; //cero para ningun cambio en repeticiones
     esCombinado: boolean;
     ilustracion: ImageData;
     descripcion: String;

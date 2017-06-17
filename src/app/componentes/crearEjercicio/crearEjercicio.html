@@ -10,32 +10,84 @@
         <ion-input [(ngModel)]="infoEjercicio.nombre" formControlName="nombre" type="text"></ion-input>
     </ion-item>
     <p *ngIf="!isValid('nombre')" color="danger" padding-left>Inserte nombre o verifique el campo ingresado</p>
+    <ion-item>
+        <ion-label color="primary" floating>Series
+            <ion-chip color="secondary">
+                <ion-label color="dark"> {{infoEjercicio.series}}</ion-label>
+            </ion-chip>
+        </ion-label>
+        <ion-range min="1" max="8" step="1" snaps="true" color="secondary" [(ngModel)]="infoEjercicio.series" formControlName="series">
+            <ion-label range-left>1</ion-label>
+            <ion-label range-right>8</ion-label>
+        </ion-range>
+    </ion-item>
 
     <ion-item>
-        <ion-label color="primary" floating>Repeticiones</ion-label>
-        <ion-input [(ngModel)]="infoEjercicio.repeticiones" formControlName="repeticiones" type="tel"></ion-input>
+        <ion-label color="primary" floating>Repeticiones
+            <ion-chip color="secondary">
+                <ion-label color="dark"> {{infoEjercicio.repeticiones}}</ion-label>
+            </ion-chip>
+        </ion-label>
+        <ion-range min="0" max="40" step="2" snaps="true" color="secondary" [(ngModel)]="infoEjercicio.repeticiones" formControlName="repeticiones">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>40</ion-label>
+        </ion-range>
     </ion-item>
-    <p *ngIf="!isValid('repeticiones')" color="danger" padding-left>Inserte repeticiones o verifique el campo ingresado"</p>
+    <p *ngIf="!isValid('repeticiones')" color="danger" padding-left>Las repeticiones no pueden ser cero!</p>
 
     <ion-item>
-        <ion-label color="primary" floating>Series</ion-label>
-        <ion-input [(ngModel)]="infoEjercicio.series" formControlName="series" type="tel"></ion-input>
+        <ion-label color="primary" floating>Peso Recomendado
+            <ion-chip color="secondary">
+                <ion-label color="dark"> {{infoEjercicio.peso}} Kg</ion-label>
+            </ion-chip>
+        </ion-label>
+        <ion-range min="0" max="200" step="1" snaps="false" color="secondary" [(ngModel)]="infoEjercicio.peso" formControlName="peso">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>200</ion-label>
+        </ion-range>
     </ion-item>
-    <p *ngIf="!isValid('series')" color="danger" padding-left>Ingrese el número de series del ejercicio</p>
 
     <ion-item>
-        <ion-label color="primary" floating>Peso recomendado</ion-label>
-        <ion-input [(ngModel)]="infoEjercicio.peso" formControlName="peso" type="tel"></ion-input>
+        <ion-label color="primary" floating>¿Tiene descarga o carga?</ion-label>
+        <ion-select interface="action-sheet" cancelText="Cancelar" [(ngModel)]="infoEjercicio.descarga" formControlName="descarga">
+            <ion-option value="noCambio">No</ion-option>
+            <ion-option value="cambioPeso">Cambio en el peso entre series</ion-option>
+            <ion-option value="cambioRepeticiones">Cambio en las cantidad repeticiones</ion-option>
+            <ion-option value="cambioPesoYRepeticiones">Cambio en las cantidad peso y repeticiones</ion-option>
+        </ion-select>
     </ion-item>
-    <p *ngIf="!isValid('peso')" color="danger" padding-left>Ingrese el peso recomendado</p>
+    <p *ngIf="!isValid('descarga')" color="danger" padding-left>Ingrese si el ejercicio posee descarga</p>
+
+    <ion-item *ngIf="infoEjercicio.descarga === 'cambioRepeticiones' || infoEjercicio.descarga === 'cambioPesoYRepeticiones'">
+        <ion-label color="primary" floating>Cambio en Repeticiones
+            <ion-chip color="secondary">
+                <ion-label color="dark"> {{infoEjercicio.cambioRepeticiones}}</ion-label>
+            </ion-chip>
+        </ion-label>
+        <ion-range min="-20" max="20" step="1" snaps="false" color="secondary" [(ngModel)]="infoEjercicio.cambioRepeticiones" formControlName="cambioRepeticiones">
+            <ion-label range-left>-20</ion-label>
+            <ion-label range-right>20</ion-label>
+        </ion-range>
+    </ion-item>
+
+    <ion-item *ngIf="infoEjercicio.descarga === 'cambioPeso' || infoEjercicio.descarga === 'cambioPesoYRepeticiones'">
+        <ion-label color="primary" floating>Cambio de Peso
+            <ion-chip color="secondary">
+                <ion-label color="dark"> {{infoEjercicio.cambioPeso}} Kg</ion-label>
+            </ion-chip>
+        </ion-label>
+        <ion-range min="-50" max="50" step="1" snaps="false" color="secondary" [(ngModel)]="infoEjercicio.cambioPeso" formControlName="cambioPeso">
+            <ion-label range-left>-50</ion-label>
+            <ion-label range-right>50</ion-label>
+        </ion-range>
+    </ion-item>
 
     <ion-item>
         <ion-label color="primary" floating>¿Es combinado?</ion-label>
-        <ion-select [(ngModel)]="infoEjercicio.esCombinado" formControlName="esCombinado">
+        <ion-select interface="action-sheet" cancelText="Cancelar" [(ngModel)]="infoEjercicio.esCombinado" formControlName="esCombinado">
 		    <ion-option value="false">No</ion-option>
 		    <ion-option value="true">Si</ion-option>
   		</ion-select>
-
     </ion-item>
     <p *ngIf="!isValid('esCombinado')" color="danger" padding-left>Ingrese si el ejercicio es combinado o no</p>
 

@@ -15,7 +15,13 @@ import { Gimnasio } from '../../Modelo/gimnasio';
   selector: 'crear-rutina',
   templateUrl: 'crearRutina.html'
 })
-export class CrearRutina implements OnInit{
+export class CrearRutina implements OnInit {
+  miForm: FormGroup;
+  infoRutina: {numeroDeDias: string;
+                  titulo: String;
+                } = {
+                numeroDeDias: null,
+                titulo: null};
 todosLosEjercicios;
 todosLosEjerciciosDelEntrenador;
 ejerciciosDeLaRutina;
@@ -23,6 +29,7 @@ nombreDeLaRutina;
 ejerciciosUsuario;
 ejerciciosTodos;
 rutinaActual;
+arrayDeDias;
   constructor(public viewCtrl: ViewController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private entrenador: Entrenador,
               private gimnasio: Gimnasio, public formBuilder: FormBuilder,
@@ -36,6 +43,25 @@ rutinaActual;
     this.rutinaActual = [];
   }
 
+  seleccionoDias(): void {
+    this.arrayDeDias = new Array(parseInt(this.infoRutina.numeroDeDias));
+    for(let i = 0; i < this.arrayDeDias.length; i++) {
+      this.arrayDeDias[i] = {
+        titulo: null,
+        descripcion: null,
+        ejerciciosDelEntrenador: this.todosLosEjerciciosDelEntrenador,
+        ejerciciosDeTodos: this.todosLosEjercicios,
+        ejerciciosDeLaRutina: new Array()
+      };
+    }
+    console.log(this.infoRutina.numeroDeDias);
+    console.log(this.arrayDeDias);
+  }
+
+  cambioElNombreDe(index) {
+    this.arrayDeDias[index].titulo = this.infoRutina.titulo;
+  }
+
   cambiarLista(): void {
     if (this.ejerciciosUsuario === true) {
       this.ejerciciosUsuario = false;
@@ -46,34 +72,38 @@ rutinaActual;
     }
   }
 
-  agregarEjercicio(ejercicio): void {
+  agregarEjercicio(ejercicio, indexDia): void {
     if (this.ejerciciosUsuario === true) {
-      this.todosLosEjerciciosDelEntrenador = this.todosLosEjerciciosDelEntrenador.filter(ejer =>{
+      this.arrayDeDias[indexDia].ejerciciosDelEntrenador = this.arrayDeDias[indexDia].ejerciciosDelEntrenador.filter(ejer =>{
         return ejer.nombre !== ejercicio.nombre
       })
     } else {
-      this.todosLosEjercicios = this.todosLosEjercicios.filter(ejer =>{
+      this.arrayDeDias[indexDia].ejerciciosDeTodos = this.arrayDeDias[indexDia].ejerciciosDeTodos.filter(ejer =>{
         return ejer.nombre !== ejercicio.nombre
       })
     }
 
-    this.rutinaActual.push(ejercicio);
+    this.arrayDeDias[indexDia].ejerciciosDeLaRutina.push(ejercicio);
   }
 
-  removerEjercicio(ejercicio): void {
+  removerEjercicio(ejercicio, indexDia): void {
     if (this.ejerciciosUsuario === true) {
-      this.todosLosEjerciciosDelEntrenador.push(ejercicio);
+      this.arrayDeDias[indexDia].ejerciciosDelEntrenador.push(ejercicio);
     } else {
-      this.todosLosEjercicios.push(ejercicio);
+      this.arrayDeDias[indexDia].ejerciciosDeTodos.push(ejercicio);
     }
 
-    this.rutinaActual = this.rutinaActual.filter(ejer =>{
+    this.arrayDeDias[indexDia].ejerciciosDeLaRutina = this.arrayDeDias[indexDia].ejerciciosDeLaRutina.filter(ejer =>{
         return ejer.nombre !== ejercicio.nombre
       })
   }
 
   cerrarModal(): void {
     this.viewCtrl.dismiss();
+  }
+
+  crearRutina(): void {
+    this.rutinaActual
   }
 
   cargarEjercicios(): void {

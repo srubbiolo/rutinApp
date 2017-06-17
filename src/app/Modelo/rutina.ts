@@ -1,7 +1,8 @@
 import { Ejercicio } from './ejercicio';
+import { RutinaDiaria } from './rutinaDiaria';
 export class Rutina {
     emailDelCreador: String;
     nombreRutina: String;
     tipoDeRutina: String;
-    listaDeEjercicios: Ejercicio [];
+    listaDeDias: RutinaDiaria [];
 }
