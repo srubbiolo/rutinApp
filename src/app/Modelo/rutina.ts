@@ -3,6 +3,6 @@ import { RutinaDiaria } from './rutinaDiaria';
 export class Rutina {
     emailDelCreador: String;
     nombreRutina: String;
-    tipoDeRutina: String;
+    descripcionRutina: String;
     listaDeDias: RutinaDiaria [];
 }

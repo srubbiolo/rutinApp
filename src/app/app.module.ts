@@ -10,6 +10,7 @@ import { CrearAsignarRutina } from '../pages/crearAsignarRutina/crearAsignarRuti
 
 import { ServicioPersonas} from '../app/servicios/servicio.persona';
 import { ServicioEjercicios} from '../app/servicios/servicio.ejercicio';
+import { ServicioRutinas } from '../app/servicios/servicio.rutina';
 import { Cliente } from '../app/Modelo/cliente';
 import { Entrenador } from '../app/Modelo/entrenador'
 import { Gimnasio } from '../app/Modelo/gimnasio';
@@ -18,6 +19,7 @@ import { ServicioLocal } from '../app/servicios/servicio.local';
 import { Alertas } from '../app/componentes/alertas/alertas';
 import { CrearEjercicio } from '../app/componentes/crearEjercicio/crearEjercicio';
 import { CrearRutina } from '../app/componentes/crearRutina/crearRutina';
+import { RutinaDiaria } from '../app/Modelo/rutinaDiaria';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,6 @@ import { CrearRutina } from '../app/componentes/crearRutina/crearRutina';
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
               Storage, ServicioPersonas, Cliente, ServicioLocal, Alertas, Entrenador,
-              Gimnasio, Ejercicio, ServicioEjercicios]
+              Gimnasio, Ejercicio, ServicioEjercicios, ServicioRutinas]
 })
 export class AppModule {}

@@ -3,7 +3,7 @@
     <ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
 </ion-toolbar>
 <ion-content padding>
-<div class="seleccion-numero-dias" *ngIf="infoRutina.numeroDeDias === null">
+<div class="seleccion-numero-dias" *ngIf="!pasoUnoCompleto">
   <h1 class="tituloDePagina">Días de la rutina</h1>
   <ion-item>
     <ion-label color="primary" floating>Seleccione el Número de días de la rutina</ion-label>
@@ -17,19 +17,37 @@
         <ion-option value="7">Siete  - 7</ion-option>
     </ion-select>
   </ion-item>
+
+  <ion-item>
+    <ion-label color="primary" floating>Nombre de la Rutina</ion-label>
+    <ion-input type="text" [(ngModel)]="nombreDeLaRutina"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>Descripción de la rutina</ion-label>
+    <ion-input type="text" [(ngModel)]="descripcionDeLaRutina"></ion-input>
+  </ion-item>
+
 </div>
-<div class="slides-de-dias">
+<div class="slides-de-dias" *ngIf="pasoUnoCompleto">
   <ion-slides pager>
     <ion-slide *ngFor="let dia of arrayDeDias; let i=index">
         <ion-buttons end>
           <button ion-button color="primary">Próximo día</button>
         </ion-buttons>
+
+        <h2 class="slide-title" [innerHTML]="nombreDeLaRutina"></h2>
+        <p class="slide-title" [innerHTML]="descripcionDeLaRutina"></p>
+
         <ion-item>
-          <ion-label color="primary" floating>Nombre del dia</ion-label>
+          <ion-label color="primary" floating>Nombre del día</ion-label>
           <ion-input type="text" [(ngModel)]="arrayDeDias[i].titulo" (ionChange)="cambioElNombreDe(i)"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating>Descripción del día</ion-label>
+          <ion-input type="text" [(ngModel)]="arrayDeDias[i].descripcion" (ionChange)="cambioLaDescripcionDe(i)"></ion-input>
+        </ion-item>
       <h2 class="slide-title" [innerHTML]="arrayDeDias[i].titulo">dia</h2>
-      <p [innerHTML]="infoRutina.descripcion"></p>
+      <p class="slide-title" [innerHTML]="arrayDeDias[i].descripcion">dia</p>
 
       <button ion-button *ngIf="ejerciciosTodos" (click)="cambiarLista()">Cambiar a ejercicios mios</button>
     <button ion-button *ngIf="ejerciciosUsuario" (click)="cambiarLista()">Cambiar a ejercicios de todos</button>
@@ -59,4 +77,7 @@
 </div>
 
 <button ion-button (click)="cerrarModal()">Cancelar</button>
+<button ion-button *ngIf="!pasoUnoCompleto" (click)="pasarASiguientePaso()">Siguiente</button>
+<button ion-button *ngIf="pasoUnoCompleto" (click)="crearRutina()">Crear Rutina</button>
+<button ion-button *ngIf="pasoUnoCompleto" (click)="crearRutinaYAsignar">Crear Rutina y asignar a</button>
 </ion-content>

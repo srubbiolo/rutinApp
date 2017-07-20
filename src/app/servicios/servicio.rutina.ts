@@ -30,12 +30,12 @@ entrenador = this.servicioLocal.getUsuarioRegistrado();
       this.servicioPersonas.actualizarUsuario();
     }
 
-    getTodosLosEjercicios(): any {
-      return this.storage.get('ejercicios');
+    getTodasLasRutinas(): any {
+      return this.storage.get('rutinas');
     }
 
-    eliminarTodosLosEjercicios(): any {
-      return this.storage.remove('ejercicios');
+    eliminarTodasLasRutinas(): any {
+      return this.storage.remove('rutinas');
     }
 
     cargarRutinaAlEntrenador(rutina: Rutina): void {

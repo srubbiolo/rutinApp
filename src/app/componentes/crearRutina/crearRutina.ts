@@ -5,11 +5,16 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { ServicioEjercicios } from '../../servicios/servicio.ejercicio';
 import { ServicioPersonas } from '../../servicios/servicio.persona';
 import { ServicioLocal } from '../../servicios/servicio.local';
+import { ServicioRutinas } from '../../servicios/servicio.rutina';
 
 import { Entrenador } from '../../Modelo/entrenador';
 import { Cliente } from '../../Modelo/cliente';
 import { Ejercicio } from '../../Modelo/ejercicio';
 import { Gimnasio } from '../../Modelo/gimnasio';
+import { Rutina } from '../../Modelo/rutina';
+import { RutinaDiaria } from '../../Modelo/rutinaDiaria';
+
+import { Alertas } from '../alertas/alertas';
 
 @Component({
   selector: 'crear-rutina',
@@ -19,28 +24,34 @@ export class CrearRutina implements OnInit {
   miForm: FormGroup;
   infoRutina: {numeroDeDias: string;
                   titulo: String;
+                  descripcion: String;
                 } = {
                 numeroDeDias: null,
-                titulo: null};
-todosLosEjercicios;
-todosLosEjerciciosDelEntrenador;
-ejerciciosDeLaRutina;
-nombreDeLaRutina;
-ejerciciosUsuario;
-ejerciciosTodos;
-rutinaActual;
-arrayDeDias;
+                titulo: null,
+                descripcion: null};
+  todosLosEjercicios;
+  todosLosEjerciciosDelEntrenador;
+  ejerciciosDeLaRutina;
+  nombreDeLaRutina;
+  descripcionDeLaRutina;
+  ejerciciosUsuario;
+  ejerciciosTodos;
+  rutinaActual;
+  arrayDeDias;
+  pasoUnoCompleto;
   constructor(public viewCtrl: ViewController, private servicioPersonas: ServicioPersonas,
               private cliente: Cliente, private entrenador: Entrenador,
               private gimnasio: Gimnasio, public formBuilder: FormBuilder,
               private servicioLocal: ServicioLocal, private ejercicio: Ejercicio,
-              private servicioEjercicios: ServicioEjercicios) { }
+              private servicioEjercicios: ServicioEjercicios, private alerta: Alertas,
+              private servicioRutinas: ServicioRutinas) { }
 
   ngOnInit(): void {
     this.cargarEjercicios();
     this.ejerciciosUsuario = true;
     this.ejerciciosTodos = false;
     this.rutinaActual = [];
+    this.pasoUnoCompleto = false;
   }
 
   seleccionoDias(): void {
@@ -54,12 +65,14 @@ arrayDeDias;
         ejerciciosDeLaRutina: new Array()
       };
     }
-    console.log(this.infoRutina.numeroDeDias);
-    console.log(this.arrayDeDias);
   }
 
   cambioElNombreDe(index) {
     this.arrayDeDias[index].titulo = this.infoRutina.titulo;
+  }
+
+  cambioLaDescripcionDe(index) {
+    this.arrayDeDias[index].descripcion = this.infoRutina.descripcion;
   }
 
   cambiarLista(): void {
@@ -102,8 +115,15 @@ arrayDeDias;
     this.viewCtrl.dismiss();
   }
 
-  crearRutina(): void {
-    this.rutinaActual
+  pasarASiguientePaso(): void {
+    console.log(this.infoRutina.numeroDeDias);
+    console.log(this.nombreDeLaRutina);
+    console.log(this.descripcionDeLaRutina);
+    if (this.infoRutina.numeroDeDias !== null &&
+        this.nombreDeLaRutina !== undefined &&
+        this.descripcionDeLaRutina !== undefined) {
+      this.pasoUnoCompleto = true;
+    }
   }
 
   cargarEjercicios(): void {
@@ -112,5 +132,48 @@ arrayDeDias;
     })
     var entrenadorRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
     this.todosLosEjerciciosDelEntrenador = entrenadorRegistrado.listaDeEjercicios;
+  }
+
+  crearRutina(): void {
+    var datosCompletos = false;
+    for (let i = 0;  i < this.arrayDeDias.length; i++) {
+      if (this.arrayDeDias[i].titulo === undefined ||
+         this.arrayDeDias[i].descripcion === undefined ||
+         this.arrayDeDias[i].ejerciciosDeLaRutina.length === 0) {
+        datosCompletos = false;
+      }
+      else {
+        datosCompletos = true;
+      }
+    }
+
+    if (datosCompletos) {
+      var rutina = new Rutina;
+      var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+
+      rutina.nombreRutina = this.nombreDeLaRutina;
+      rutina.descripcionRutina = this.descripcionDeLaRutina;
+      rutina.emailDelCreador = usuarioRegistrado.email;
+      rutina.listaDeDias = [];
+
+      for (let i = 0;  i < this.arrayDeDias.length; i++) {
+        var rutinaDiaria = new RutinaDiaria;
+        rutinaDiaria.diaNumero = i + 1;
+        rutinaDiaria.titulo = this.arrayDeDias[i].titulo;
+        rutinaDiaria.descripcion = this.arrayDeDias[i].descripcion;
+        rutinaDiaria.listaDeEjercicios = this.arrayDeDias[i].ejerciciosDeLaRutina;
+        rutina.listaDeDias.push(rutinaDiaria);
+      }
+      console.log(rutina);
+      this.servicioRutinas.setRutina(rutina);
+      this.viewCtrl.dismiss();
+
+    } else {
+      this.alerta.mostrarAlerta('Atención', 'Campos no completos', 'Volver');
+    }
+  }
+
+  crearRutinaYAsignar(): void {
+    //TODO: hacer esta función si hay tiempo
   }
 }
