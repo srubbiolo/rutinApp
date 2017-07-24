@@ -9,6 +9,7 @@ import { Gimnasio } from '../../app/Modelo/gimnasio';
 import { Alertas } from '../../app/componentes/alertas/alertas';
 import { CrearEjercicio } from '../../app/componentes/crearEjercicio/crearEjercicio';
 import { CrearRutina } from '../../app/componentes/crearRutina/crearRutina';
+import { AsignarRutina } from '../../app/componentes/asignarRutina/asignarRutina';
 
 import { Page1 } from '../../pages/page1/page1';
 
@@ -44,6 +45,7 @@ export class CrearAsignarRutina implements OnInit {
   }
 
   asignarRutina(): void {
-
+    let profileModal = this.modal.create(AsignarRutina);
+    profileModal.present();
   }
 }

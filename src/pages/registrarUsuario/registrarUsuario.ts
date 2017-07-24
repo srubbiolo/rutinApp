@@ -20,7 +20,7 @@ export class RegistrarUsuario implements OnInit{
   TIEMPO_TIMEOUT = 300;
   todosLosClientes;
   todosLosEntrenadores;
-  gimnasios:  Gimnasio[];
+  gimnasios: Gimnasio[];
   gimnasioSeleccionado;
   usuarioSeleccionado;
   datosCompletados;
@@ -254,7 +254,5 @@ export class RegistrarUsuario implements OnInit{
       this.recargarGimnasios();
     }
   }
-
-
 
 }

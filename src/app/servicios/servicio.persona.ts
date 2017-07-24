@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Cliente } from '../Modelo/cliente';
 import { Entrenador } from '../Modelo/entrenador';
 import { Gimnasio } from '../Modelo/gimnasio';
+import { Rutina } from '../Modelo/rutina';
 import { ServicioLocal } from './servicio.local';
 
 @Injectable()
@@ -55,6 +56,29 @@ export class ServicioPersonas {
       })
     }
 
+    actualizarCliente(cliente: Cliente) {
+      this.getTodosLosClientes().then(val => {
+
+        var nuevoArrayClientes = val.filter(elemento =>{
+          return elemento.email !== cliente.email;
+        });
+        nuevoArrayClientes.push(cliente);
+        this.storage.set('clientes', nuevoArrayClientes);
+
+      })
+    }
+
+    asignarRutinaACliente(cliente: Cliente, rutina: Rutina) {
+      if (cliente.hasOwnProperty('listaDeRutinas')) {
+        cliente.listaDeRutinas.push(rutina);
+      } else {
+        cliente.listaDeRutinas = [];
+        cliente.listaDeRutinas.push(rutina);
+      }
+
+      this.actualizarCliente(cliente);
+    }
+
     setUsuarioIniciadoSesion(dataUsuario: any, tipoUsuario: String): void {
       var objetoUsuario = {sesionIniciada: true, datosDeUsuario: dataUsuario, claseUsuario: tipoUsuario};
       this.storage.set('usuario', objetoUsuario);
@@ -81,6 +105,25 @@ export class ServicioPersonas {
           this.storage.set('gimnasios', arrayGimnasios);
          })
     }
+
+    asignarClienteAEntrenador(cliente: Cliente): void {
+      var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+      var listaDeClientes = [];
+      if (usuarioRegistrado.hasOwnProperty('listaDeClientes')) {
+        usuarioRegistrado.listaDeClientes.push(cliente);
+      } else {
+        usuarioRegistrado.listaDeClientes = [];
+        usuarioRegistrado.listaDeClientes.push(cliente);
+      }
+
+      this.servicioLocal.setUsuarioRegistrado(usuarioRegistrado);
+      this.actualizarUsuario();
+
+      //ahora se lo seteo al cliente.
+      cliente.emailDelEntrenador = usuarioRegistrado.email;
+      this.actualizarCliente(cliente);
+    }
+
     getGimnasios(): any {
       return this.storage.get('gimnasios');
     }

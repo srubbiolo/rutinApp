@@ -10,6 +10,7 @@ import { Alertas } from '../../app/componentes/alertas/alertas';
 
 import { Page1 } from '../../pages/page1/page1';
 import { CrearAsignarRutina} from '../../pages/crearAsignarRutina/crearAsignarRutina';
+import { AsignarCliente } from '../../app/componentes/asignarCliente/asignarCliente';
 
 @Component({
   selector: 'main-entrenador',
@@ -27,12 +28,16 @@ export class MainEntrenador implements OnInit {
   }
 
   salir(): void {
-    this.servicioLocal.limpiarUsuario();  
+    this.servicioLocal.limpiarUsuario();
     this.servicioPersonas.logOut();
     setTimeout(() => { this.navCtrl.push(Page1) }, 100);
   }
 
   crearAsignarRutina(): void {
     this.navCtrl.push(CrearAsignarRutina);
+  }
+
+  seguirClientes(): void {
+    this.navCtrl.push(AsignarCliente);
   }
 }

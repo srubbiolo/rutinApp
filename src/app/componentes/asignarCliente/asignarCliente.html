@@ -1,0 +1,18 @@
+<ion-toolbar>
+    <ion-title>Asignar Cliente</ion-title>
+    <ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
+</ion-toolbar>
+
+<ion-content padding>
+
+<div class="asignarCliente">
+    <h4>Seleccione un cliente del gimnasio</h4>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let cliente of todosLosClientesDelGimnasio" (click)="asignarCliente(cliente)">
+        {{ cliente.nombre }} {{ cliente.apellido }}
+      </ion-item>
+    </ion-list>
+</div>
+<button ion-button (click)="cerrarModal()">Cancelar</button>
+

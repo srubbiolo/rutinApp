@@ -19,6 +19,8 @@ import { ServicioLocal } from '../app/servicios/servicio.local';
 import { Alertas } from '../app/componentes/alertas/alertas';
 import { CrearEjercicio } from '../app/componentes/crearEjercicio/crearEjercicio';
 import { CrearRutina } from '../app/componentes/crearRutina/crearRutina';
+import { AsignarRutina } from '../app/componentes/asignarRutina/asignarRutina';
+import { AsignarCliente } from '../app/componentes/asignarCliente/asignarCliente';
 import { RutinaDiaria } from '../app/Modelo/rutinaDiaria';
 
 @NgModule({
@@ -30,7 +32,9 @@ import { RutinaDiaria } from '../app/Modelo/rutinaDiaria';
     MainEntrenador,
     CrearAsignarRutina,
     CrearEjercicio,
-    CrearRutina
+    CrearRutina,
+    AsignarRutina,
+    AsignarCliente
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -44,7 +48,9 @@ import { RutinaDiaria } from '../app/Modelo/rutinaDiaria';
     MainEntrenador,
     CrearAsignarRutina,
     CrearEjercicio,
-    CrearRutina
+    CrearRutina,
+    AsignarRutina,
+    AsignarCliente
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
               Storage, ServicioPersonas, Cliente, ServicioLocal, Alertas, Entrenador,
