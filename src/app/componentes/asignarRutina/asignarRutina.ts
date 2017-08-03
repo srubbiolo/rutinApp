@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { ServicioPersonas } from '../../servicios/servicio.persona';
@@ -29,25 +29,32 @@ export class AsignarRutina implements OnInit {
               private cliente: Cliente, private entrenador: Entrenador,
               private gimnasio: Gimnasio, public formBuilder: FormBuilder,
               private servicioLocal: ServicioLocal, private alertCtrl: AlertController,
-              private servicioRutinas: ServicioRutinas) { }
+              private servicioRutinas: ServicioRutinas, private navParams: NavParams) { }
 
   ngOnInit(): void {
     var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
-    this.clientesDelEntrenador = usuarioRegistrado.listaDeClientes;
+    this.servicioPersonas.getTodosLosClientes().then((clientes) => {
+      this.clientesDelEntrenador = clientes.filter(cliente =>{
+        return cliente.emailDelEntrenador === usuarioRegistrado.email;
+      })
+    });
     this.servicioRutinas.getTodasLasRutinas().then((rutinas) => {
       this.todasLasRutinas = rutinas;
-      console.log(rutinas);
     });
     this.rutinasDelEntrenador = usuarioRegistrado.listaDeRutinas;
     this.clienteSeleccionado = null;
-    this.rutinaSeleccionada = null;
+    this.rutinaSeleccionada = (this.navParams.get('rutinaCreada')) !== undefined ? this.navParams.get('rutinaCreada') : null;
     this.rutinasDeTodos = false;
     this.rutinasDeUsuario = true;
-    console.log(usuarioRegistrado);
   }
 
   seleccionarCliente(cliente: Cliente): void {
     this.clienteSeleccionado = cliente;
+
+    //en caso que vengo desde crear rutina y ya la tengo seteada
+    if (this.rutinaSeleccionada !== null) {
+      this.asignarRutina();
+    }
   }
 
   seleccionarRutina(rutina: Rutina): void {
@@ -66,6 +73,7 @@ export class AsignarRutina implements OnInit {
   }
 
   asignarRutina(): void {
+    console.log(this.clienteSeleccionado, this.rutinaSeleccionada);
     let alert = this.alertCtrl.create({
       title: 'Asignar Rutina a Cliente',
       message: 'Usted está por asignar a: ' + this.clienteSeleccionado.nombre +

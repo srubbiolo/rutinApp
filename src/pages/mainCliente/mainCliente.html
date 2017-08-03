@@ -1,15 +1,13 @@
 <ion-header>
     <ion-navbar hideBackButton>
     <ion-title>Menu Principal</ion-title>
-    <button ion-button small color="secondary" (click)="salir()">Salir</button>
+    <button ion-button small color="danger" class="bonton-salir" (click)="salir()">Salir</button>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Hola {{infoDeCliente.nombre}}</h3>
-  <h4>usted tiene rutina asignada</h4>
-  <h4>boton pedir dieta</h4>
-  <h4>boton pedir Rutina</h4>
+  <h3> Bienvenida {{infoDeCliente.nombre}} </h3>
   <button ion-button large (click)="verRutinas()">Ver Rutinas</button>
+  <button ion-button large color="secondary" (click)="pedirRutina()">Pedir Rutina</button>
 
 </ion-content>

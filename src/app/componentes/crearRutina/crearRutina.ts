@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { ViewController, NavController } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { ServicioEjercicios } from '../../servicios/servicio.ejercicio';
@@ -13,6 +13,7 @@ import { Ejercicio } from '../../Modelo/ejercicio';
 import { Gimnasio } from '../../Modelo/gimnasio';
 import { Rutina } from '../../Modelo/rutina';
 import { RutinaDiaria } from '../../Modelo/rutinaDiaria';
+import { AsignarRutina } from '../../componentes/asignarRutina/asignarRutina';
 
 import { Alertas } from '../alertas/alertas';
 
@@ -44,7 +45,7 @@ export class CrearRutina implements OnInit {
               private gimnasio: Gimnasio, public formBuilder: FormBuilder,
               private servicioLocal: ServicioLocal, private ejercicio: Ejercicio,
               private servicioEjercicios: ServicioEjercicios, private alerta: Alertas,
-              private servicioRutinas: ServicioRutinas) { }
+              private servicioRutinas: ServicioRutinas, private navCtrl: NavController) { }
 
   ngOnInit(): void {
     this.cargarEjercicios();
@@ -174,6 +175,42 @@ export class CrearRutina implements OnInit {
   }
 
   crearRutinaYAsignar(): void {
-    //TODO: hacer esta función si hay tiempo
+    var datosCompletos = false;
+    for (let i = 0;  i < this.arrayDeDias.length; i++) {
+      if (this.arrayDeDias[i].titulo === undefined ||
+         this.arrayDeDias[i].descripcion === undefined ||
+         this.arrayDeDias[i].ejerciciosDeLaRutina.length === 0) {
+        datosCompletos = false;
+      }
+      else {
+        datosCompletos = true;
+      }
+    }
+
+    if (datosCompletos) {
+      var rutina = new Rutina;
+      var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+
+      rutina.nombreRutina = this.nombreDeLaRutina;
+      rutina.descripcionRutina = this.descripcionDeLaRutina;
+      rutina.emailDelCreador = usuarioRegistrado.email;
+      rutina.listaDeDias = [];
+
+      for (let i = 0;  i < this.arrayDeDias.length; i++) {
+        var rutinaDiaria = new RutinaDiaria;
+        rutinaDiaria.diaNumero = i + 1;
+        rutinaDiaria.titulo = this.arrayDeDias[i].titulo;
+        rutinaDiaria.descripcion = this.arrayDeDias[i].descripcion;
+        rutinaDiaria.listaDeEjercicios = this.arrayDeDias[i].ejerciciosDeLaRutina;
+        rutina.listaDeDias.push(rutinaDiaria);
+      }
+      console.log(rutina);
+      this.servicioRutinas.setRutina(rutina);
+      this.viewCtrl.dismiss();
+      this.navCtrl.push(AsignarRutina, {rutinaCreada: rutina});
+
+    } else {
+      this.alerta.mostrarAlerta('Atención', 'Campos no completos', 'Volver');
+    }
   }
 }

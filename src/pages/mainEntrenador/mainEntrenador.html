@@ -1,17 +1,22 @@
 <ion-header>
     <ion-navbar hideBackButton>
     <ion-title>Menu Principal</ion-title>
-    <button ion-button small color="secondary" (click)="salir()">Salir</button>
+    <button ion-button small color="danger" class="bonton-salir" (click)="salir()">Salir</button>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Hola {{infoDeEntrenador.nombre}}</h3>
-  <h4>Fulanitos pidieron rutina</h4>
-  <h4>Pedritos completaron rutina</h4>
-  <h4>boton listar entrenados por yo</h4>
-  <!-- usted tiene clientes que requieren rutina,
-  usted tiene clientes que presentan avance de rutina -->
+<ion-content class="main-entrenador" padding>
+  <h2>Bienvenido {{infoDeEntrenador.nombre}}</h2>
+  <div *ngIf="mostrarClientes">
+    <h3> Los siguientes clientes solicitaron rutina: </h3>
+    <div class="cliente" *ngFor="let cliente of clientesQuePidieronRutina">
+      <ion-icon class="icono-contacto" name="contact"></ion-icon>
+      <h4 cLass="nombre-contacto">{{cliente.nombre}} {{cliente.apellido}}</h4>
+    </div>
+  </div>
+  <div *ngIf="!mostrarClientes">
+    <h3> Ningun cliente le ha solicitado rutina.</h3>
+  </div>
   <button ion-button large (click)="seguirClientes()">Seguir Clientes</button>
   <button ion-button large (click)="crearAsignarRutina()">Crear/Asignar Rutinas</button>
 

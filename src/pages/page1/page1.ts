@@ -104,28 +104,12 @@ export class Page1 implements OnInit {
   }
 
 agregarGimnasios(): void {
-    var gym1 = new Gimnasio();
-    gym1.barrio = 'Nueva Cordoba';
-    gym1.ciudad = 'Córdoba';
-    gym1.cp = 5000;
-    gym1.id = 1;
-    gym1.nombre = 'Synergy';
-    gym1.pais = 'Argentina';
-    this.servicioPersonas.setGimnasio(gym1);
-
-    var gym2 = new Gimnasio();
-    gym2.barrio = 'Cofico';
-    gym2.ciudad = 'Córdoba';
-    gym2.cp = 5001;
-    gym2.id = 2;
-    gym2.nombre = 'Hercules';
-    gym2.pais = 'Argentina';
-    this.servicioPersonas.setGimnasio(gym2);
+  this.servicioPersonas.setGimnasios();
 }
 
 mostrarGimnasios(): void {
     this.servicioPersonas.getGimnasios().then((val) => {
-       console.log('toos los gims', val);
+       console.log('todos los gimnasios', val);
      })
 }
 
@@ -158,9 +142,9 @@ cargar1y1(): void {
   cliente.dni = 34315653;
   cliente.email = 'rubbiolo@gmail.com';
   cliente.gimnasio = gym;
-  entrenador.contraseña = 'itnas1';
-  entrenador.fechaNacimiento = new Date('11-4-1989');
-  entrenador.telefono = 3516775504;
+  cliente.contraseña = 'itnas1';
+  cliente.fechaNacimiento = new Date('11-4-1989');
+  cliente.telefono = 3516775504;
 
   entrenador.nombre = 'Federico';
   entrenador.apellido = 'Ussei';

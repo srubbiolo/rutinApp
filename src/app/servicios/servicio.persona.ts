@@ -69,28 +69,15 @@ export class ServicioPersonas {
     }
 
     asignarRutinaACliente(cliente: Cliente, rutina: Rutina) {
-      console.log(cliente);
       var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
-      console.log(usuarioRegistrado);
-      console.log(cliente.hasOwnProperty('tuVieja'));
-      console.log(cliente.hasOwnProperty('listaDeRutinas'));
-      console.log(cliente.hasOwnProperty('dni'));
-      console.log(cliente.hasOwnProperty('apellido'));
-      console.log(cliente.hasOwnProperty('nombre'));
-      console.log(cliente.hasOwnProperty('gimnasio'));
-      console.log(cliente.listaDeRutinas);
-      console.log(cliente);
-      console.log(cliente.nombre);
-      console.log(cliente.apellido);
       if (cliente.hasOwnProperty('listaDeRutinas')) {
-        console.log('entro en ture en hasownproperty');
         cliente.listaDeRutinas.push(rutina);
       } else {
-        console.log('entro en false con el own property');
         cliente.listaDeRutinas = [];
         cliente.listaDeRutinas.push(rutina);
       }
 
+      cliente.solicitoRutina = false;
       this.actualizarCliente(cliente);
     }
 
@@ -108,27 +95,56 @@ export class ServicioPersonas {
       this.storage.set('usuario', objetoUsuario)
     }
 
-    setGimnasio(gimnasio: Gimnasio): void {
+    setGimnasios(): void {
       var arrayGimnasios = [];
-        this.storage.get('gimnasios').then((gimnasios) => {
-          if (gimnasios == null) {
-             arrayGimnasios.push(gimnasio);
-          } else {
-             arrayGimnasios = gimnasios;
-             arrayGimnasios.push(gimnasio);
-          }
-          this.storage.set('gimnasios', arrayGimnasios);
-         })
+
+      var gym1 = new Gimnasio();
+      gym1.barrio = 'Nueva Córdoba';
+      gym1.ciudad = 'Córdoba';
+      gym1.cp = 5000;
+      gym1.id = 1;
+      gym1.nombre = 'Synergy';
+      gym1.pais = 'Argentina';
+      arrayGimnasios.push(gym1);
+
+      var gym2 = new Gimnasio();
+      gym2.barrio = 'Cofico';
+      gym2.ciudad = 'Córdoba';
+      gym2.cp = 5001;
+      gym2.id = 2;
+      gym2.nombre = 'Hercules';
+      gym2.pais = 'Argentina';
+      arrayGimnasios.push(gym2);
+
+      var gym3 = new Gimnasio();
+      gym3.barrio = 'Nueva Córdoba';
+      gym3.ciudad = 'Córdoba';
+      gym3.cp = 5001;
+      gym3.id = 3;
+      gym3.nombre = 'Best Club';
+      gym3.pais = 'Argentina';
+      arrayGimnasios.push(gym3);
+
+      var gym4 = new Gimnasio();
+      gym4.barrio = 'Recoleta';
+      gym4.ciudad = 'Buenos Aires';
+      gym4.cp = 1001;
+      gym4.id = 4;
+      gym4.nombre = 'Gym City';
+      gym4.pais = 'Argentina';
+      arrayGimnasios.push(gym4);
+
+      this.storage.set('gimnasios', arrayGimnasios);
     }
 
     asignarClienteAEntrenador(cliente: Cliente): void {
       var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
       var listaDeClientes = [];
       if (usuarioRegistrado.hasOwnProperty('listaDeClientes')) {
-        usuarioRegistrado.listaDeClientes.push(cliente);
+        usuarioRegistrado.listaDeClientes.push(cliente.email);
       } else {
         usuarioRegistrado.listaDeClientes = [];
-        usuarioRegistrado.listaDeClientes.push(cliente);
+        usuarioRegistrado.listaDeClientes.push(cliente.email);
       }
 
       this.servicioLocal.setUsuarioRegistrado(usuarioRegistrado);
@@ -137,6 +153,12 @@ export class ServicioPersonas {
       //ahora se lo seteo al cliente.
       cliente.emailDelEntrenador = usuarioRegistrado.email;
       this.actualizarCliente(cliente);
+    }
+
+    usuarioPideRutina(): void {
+      var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+      usuarioRegistrado.solicitoRutina = true;
+      this.actualizarCliente(usuarioRegistrado);
     }
 
     getGimnasios(): any {

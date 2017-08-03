@@ -23,8 +23,17 @@ export class MainEntrenador implements OnInit {
               private servicioLocal: ServicioLocal) {}
 
   infoDeEntrenador = this.servicioLocal.getUsuarioRegistrado();
+  clientesQuePidieronRutina;
+  mostrarClientes;
 
   ngOnInit(): void {
+    var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+    this.servicioPersonas.getTodosLosClientes().then((clientes) => {
+      this.clientesQuePidieronRutina = clientes.filter(cliente =>{
+        return cliente.solicitoRutina === true;
+      });
+      this.mostrarClientes = (this.clientesQuePidieronRutina.length > 0);
+    });
   }
 
   salir(): void {
