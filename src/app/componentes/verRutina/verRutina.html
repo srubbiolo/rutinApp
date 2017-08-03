@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title>Ver Rutina</ion-title>
+      <ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="diaSeleccionado">
+    <ion-segment-button *ngFor="let dia of rutina.listaDeDias" value="{{dia.diaNumero}}">
+      Día {{dia.diaNumero}}
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngFor="let dia of rutina.listaDeDias">
+    <div [hidden]="diaSeleccionado != dia.diaNumero">
+      <h4 style="text-align: center;">{{dia.titulo}}</h4>
+      <p style="text-align: center;">Descripción: {{dia.descripcion}}</p>
+      <ion-list>
+        <ion-item *ngFor="let ejercicio of dia.listaDeEjercicios" (click)="mostrarEjercicio(ejercicio)">
+          Nombre de ejercicio: {{ejercicio.nombre}}
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <button ion-button (click)="cerrarModal()">Volver</button>
+</ion-content>

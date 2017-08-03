@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AlertController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'alerta',
@@ -7,7 +8,7 @@ import { AlertController } from 'ionic-angular';
 })
 export class Alertas {
 
-  constructor(public alertCtrl: AlertController) {
+  constructor(public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
 
   mostrarAlerta(titulo: string, subtitulo: string, boton: string) {
@@ -17,5 +18,15 @@ export class Alertas {
       buttons: [boton]
     });
     alert.present();
+  }
+
+  mostrarToast(mensaje: string, posicion: string, duracion: number, ) {
+    //posicion: top/middle/bottom
+    let toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: duracion,
+      position: posicion
+    });
+    toast.present(toast);
   }
 }

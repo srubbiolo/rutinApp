@@ -10,6 +10,7 @@ import { Gimnasio } from '../../app/Modelo/gimnasio';
 
 import { RegistrarUsuario } from '../../pages/registrarUsuario/registrarUsuario';
 import { MainEntrenador } from '../../pages/mainEntrenador/mainEntrenador';
+import { MainCliente } from '../../pages/mainCliente/mainCliente';
 
 @Component({
   selector: 'page-page1',
@@ -31,8 +32,8 @@ export class Page1 implements OnInit {
       console.log(val);
       if(val.sesionIniciada) {
         if (val.claseUsuario == 'cliente') {
-          // this.servicioLocal.setUsuarioRegistrado(val.datosDeUsuario);
-          // this.navCtrl.push(MainCliente);
+          this.servicioLocal.setUsuarioRegistrado(val.datosDeUsuario);
+          this.navCtrl.push(MainCliente);
         } else if (val.claseUsuario == 'entrenador') {
           this.servicioLocal.setUsuarioRegistrado(val.datosDeUsuario);
           this.navCtrl.push(MainEntrenador);
@@ -58,9 +59,9 @@ export class Page1 implements OnInit {
     if (cliente !== undefined && entrenador === undefined) {
       if (cliente.contraseña === this.contrasenna) {
         console.log('tengo un cliente válido');
-        // this.servicioPersonas.setUsuarioIniciadoSesion(cliente, 'cliente');
-        // this.servicioLocal.setUsuarioRegistrado(cliente);
-        //redirigir apagina de cliente
+        this.servicioPersonas.setUsuarioIniciadoSesion(cliente, 'cliente');
+        this.servicioLocal.setUsuarioRegistrado(cliente);
+        this.navCtrl.push(MainCliente);
       } else {
         this.contrasenna = '';
         this.revisarCampos();
@@ -147,8 +148,8 @@ cargar1y1(): void {
   var gym = new Gimnasio;
   gym.barrio = 'Nuñez';
   gym.ciudad = 'Capital Federal';
-  gym.cp = 2333; 
-  gym.id = 1; 
+  gym.cp = 2333;
+  gym.id = 1;
   gym.nombre = 'Gym River Plate';
   gym.pais = 'Argentina';
 

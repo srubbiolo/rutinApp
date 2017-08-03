@@ -69,9 +69,24 @@ export class ServicioPersonas {
     }
 
     asignarRutinaACliente(cliente: Cliente, rutina: Rutina) {
+      console.log(cliente);
+      var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
+      console.log(usuarioRegistrado);
+      console.log(cliente.hasOwnProperty('tuVieja'));
+      console.log(cliente.hasOwnProperty('listaDeRutinas'));
+      console.log(cliente.hasOwnProperty('dni'));
+      console.log(cliente.hasOwnProperty('apellido'));
+      console.log(cliente.hasOwnProperty('nombre'));
+      console.log(cliente.hasOwnProperty('gimnasio'));
+      console.log(cliente.listaDeRutinas);
+      console.log(cliente);
+      console.log(cliente.nombre);
+      console.log(cliente.apellido);
       if (cliente.hasOwnProperty('listaDeRutinas')) {
+        console.log('entro en ture en hasownproperty');
         cliente.listaDeRutinas.push(rutina);
       } else {
+        console.log('entro en false con el own property');
         cliente.listaDeRutinas = [];
         cliente.listaDeRutinas.push(rutina);
       }

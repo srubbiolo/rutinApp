@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-navbar>
+    <ion-title>Rutinas</ion-title>
+    <button ion-button small color="secondary" (click)="salir()">Salir</button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+<h4>Seleccione la rutina que desee seguir</h4>
+
+<ion-card *ngFor="let rutina of listaDeRutinas" (click)="abrirRutina(rutina)">
+  <ion-card-header>
+    {{rutina.nombreRutina}}
+  </ion-card-header>
+  <ion-card-content>
+    Descripción de rutina: {{rutina.descripcionRutina}}.
+    Esta rutina consta de: {{rutina.listaDeDias.length}} días
+  </ion-card-content>
+</ion-card>
+
+</ion-content>

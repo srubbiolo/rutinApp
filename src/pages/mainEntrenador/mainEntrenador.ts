@@ -1,6 +1,6 @@
 import { Component , OnInit} from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ServicioPersonas } from '../../app/servicios/servicio.persona';
 import { ServicioLocal } from '../../app/servicios/servicio.local';
 import { Cliente } from '../../app/Modelo/cliente';

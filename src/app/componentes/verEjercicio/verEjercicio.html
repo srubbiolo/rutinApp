@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title>Ver Ejercicio</ion-title>
+      <ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h4 style="text-align: center;">{{ejercicio.nombre}}</h4>
+  <h4>Descripción del ejercicio: {{ejercicio.descripcion}}</h4>
+  <ion-card *ngFor="let serie of series">
+  <ion-card-header>
+    Serie número: {{serie.numeroDeSerie}}
+  </ion-card-header>
+  <ion-card-content>
+    Repeticiones: {{serie.repeticiones}}
+    <br>
+    Peso: {{serie.peso}} Kg.
+  </ion-card-content>
+  </ion-card>
+  <button ion-button (click)="cerrarModal()">Volver</button>
+</ion-content>
