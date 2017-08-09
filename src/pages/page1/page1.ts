@@ -26,6 +26,7 @@ export class Page1 implements OnInit {
   habilitarBoton = false;
   todosLosClientes;
   todosLosEntrenadores;
+  mostrarDevTools;
 
   ngOnInit(): void {
     this.servicioPersonas.getUsuarioIniciadoSesion().then((val) => {
@@ -43,13 +44,17 @@ export class Page1 implements OnInit {
     .catch((err) => {
       this.servicioPersonas.logOut();
       console.log('primera vez que se entra en este dispositivo');
-    })
+    });
+
     this.servicioPersonas.getTodosLosClientes().then((val) => {
       this.todosLosClientes = val;
-    })
+    });
+
     this.servicioPersonas.getTodosLosEntrenadores().then((val) => {
       this.todosLosEntrenadores = val;
-    })
+    });
+
+    this.mostrarDevTools = true;
   }
 
   iniciarSesion(): void {
@@ -129,19 +134,19 @@ mostrar(): void {
 cargar1y1(): void {
   var cliente = new Cliente;
   var entrenador = new Entrenador;
-  var gym = new Gimnasio;
-  gym.barrio = 'Nuñez';
-  gym.ciudad = 'Capital Federal';
-  gym.cp = 2333;
-  gym.id = 1;
-  gym.nombre = 'Gym River Plate';
-  gym.pais = 'Argentina';
+  var gym1 = new Gimnasio();
+  gym1.barrio = 'Nueva Córdoba';
+  gym1.ciudad = 'Córdoba';
+  gym1.cp = 5000;
+  gym1.id = 1;
+  gym1.nombre = 'Synergy';
+  gym1.pais = 'Argentina';
 
   cliente.nombre = 'Santiago';
   cliente.apellido = 'Rubbiolo';
   cliente.dni = 34315653;
   cliente.email = 'rubbiolo@gmail.com';
-  cliente.gimnasio = gym;
+  cliente.gimnasio = gym1;
   cliente.contraseña = 'itnas1';
   cliente.fechaNacimiento = new Date('11-4-1989');
   cliente.telefono = 3516775504;
@@ -150,13 +155,21 @@ cargar1y1(): void {
   entrenador.apellido = 'Ussei';
   entrenador.dni = 34315654;
   entrenador.email = 'fede@gmail.com';
-  entrenador.gimnasio = gym;
+  entrenador.gimnasio = gym1;
   entrenador.contraseña = 'fede1';
   entrenador.fechaNacimiento = new Date('2-5-1988');
   entrenador.telefono = 3516775505;
 
   this.servicioPersonas.setUsuario(cliente, 'cliente');
   this.servicioPersonas.setUsuario(entrenador, 'entrenador');
+}
+
+toggleDevTools(): void {
+  if (this.mostrarDevTools) {
+    this.mostrarDevTools = false;
+  } else {
+    this.mostrarDevTools = true;
+  }
 }
 
 

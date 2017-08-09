@@ -59,6 +59,7 @@ export class AsignarCliente implements OnInit {
           text: 'Asignar Cliente',
           handler: () => {
             this.servicioPersonas.asignarClienteAEntrenador(cliente);
+            this.alerta.mostrarToast(cliente.nombre + ' ' + cliente.apellido + ' es ahora cliente suyo.', 'top', 2500);
             this.viewCtrl.dismiss();
           }
         }

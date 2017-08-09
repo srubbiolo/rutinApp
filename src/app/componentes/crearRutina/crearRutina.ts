@@ -117,9 +117,6 @@ export class CrearRutina implements OnInit {
   }
 
   pasarASiguientePaso(): void {
-    console.log(this.infoRutina.numeroDeDias);
-    console.log(this.nombreDeLaRutina);
-    console.log(this.descripcionDeLaRutina);
     if (this.infoRutina.numeroDeDias !== null &&
         this.nombreDeLaRutina !== undefined &&
         this.descripcionDeLaRutina !== undefined) {
@@ -167,6 +164,7 @@ export class CrearRutina implements OnInit {
       }
       console.log(rutina);
       this.servicioRutinas.setRutina(rutina);
+      this.alerta.mostrarToast('Se le ha creado la rutina con éxito', 'top', 2500);
       this.viewCtrl.dismiss();
 
     } else {
@@ -204,9 +202,9 @@ export class CrearRutina implements OnInit {
         rutinaDiaria.listaDeEjercicios = this.arrayDeDias[i].ejerciciosDeLaRutina;
         rutina.listaDeDias.push(rutinaDiaria);
       }
-      console.log(rutina);
       this.servicioRutinas.setRutina(rutina);
       this.viewCtrl.dismiss();
+      this.alerta.mostrarToast('Se le ha creado la rutina con éxito', 'top', 2500);
       this.navCtrl.push(AsignarRutina, {rutinaCreada: rutina});
 
     } else {

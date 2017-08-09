@@ -1,33 +1,35 @@
-<ion-toolbar>
-    <ion-title>Asignar Rutina</ion-title>
-    <ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
-</ion-toolbar>
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Asignar Rutina</ion-title>
+        <ion-icon class="circulo-cerrar"(click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
+    </ion-toolbar>
+</ion-header>
 
 <ion-content padding>
+  <div class="seleccionarCliente" *ngIf="clienteSeleccionado === null">
+      <h4>Seleccione un de sus clientes</h4>
+      <ion-list>
+        <ion-item *ngFor="let cliente of clientesDelEntrenador" (click)="seleccionarCliente(cliente)">
+          {{ cliente.nombre }} {{ cliente.apellido }}
+        </ion-item>
+      </ion-list>
+  </div>
 
-<div class="seleccionarCliente" *ngIf="clienteSeleccionado === null">
-    <h4>Seleccione un de sus clientes</h4>
-    <ion-list>
-      <ion-item *ngFor="let cliente of clientesDelEntrenador" (click)="seleccionarCliente(cliente)">
-        {{ cliente.nombre }} {{ cliente.apellido }}
-      </ion-item>
-    </ion-list>
-</div>
+  <div class="seleccionarRutina" *ngIf="rutinaSeleccionada === null && clienteSeleccionado !== null">
+      <button ion-button *ngIf="rutinasDeTodos" (click)="cambiarLista()">Cambiar a rutias mías</button>
+      <button ion-button *ngIf="rutinasDeUsuario" (click)="cambiarLista()">Cambiar a rutinas de todos</button>
+      <h4>Seleccione una rutina para asignar</h4>
+      <ion-list *ngIf="rutinasDeUsuario">
+        <ion-item *ngFor="let rutina of rutinasDelEntrenador" (click)="seleccionarRutina(rutina)">
+          {{ rutina.nombreRutina }} {{ rutina.descripcionRutina }}
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="rutinasDeTodos">
+        <ion-item *ngFor="let rutina of todasLasRutinas" (click)="seleccionarRutina(rutina)">
+          {{ rutina.nombreRutina }} {{ rutina.descripcionRutina }}
+        </ion-item>
+      </ion-list>
 
-<div class="seleccionarRutina" *ngIf="rutinaSeleccionada === null && clienteSeleccionado !== null">
-    <button ion-button *ngIf="rutinasDeTodos" (click)="cambiarLista()">Cambiar a rutias mías</button>
-    <button ion-button *ngIf="rutinasDeUsuario" (click)="cambiarLista()">Cambiar a rutinas de todos</button>
-    <h4>Seleccione una rutina para asignar</h4>
-    <ion-list *ngIf="rutinasDeUsuario">
-      <ion-item *ngFor="let rutina of rutinasDelEntrenador" (click)="seleccionarRutina(rutina)">
-        {{ rutina.nombreRutina }} {{ rutina.descripcionRutina }}
-      </ion-item>
-    </ion-list>
-    <ion-list *ngIf="rutinasDeTodos">
-      <ion-item *ngFor="let rutina of todasLasRutinas" (click)="seleccionarRutina(rutina)">
-        {{ rutina.nombreRutina }} {{ rutina.descripcionRutina }}
-      </ion-item>
-    </ion-list>
-
-</div>
-<button ion-button (click)="cerrarModal()">Cancelar</button>
+  </div>
+  <button ion-button (click)="cerrarModal()">Cancelar</button>
+</ion-content>

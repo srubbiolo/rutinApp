@@ -1,7 +1,9 @@
-<ion-toolbar>
-	<ion-title>Crear Ejercicio</ion-title>
-	<ion-icon (click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
-</ion-toolbar>
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Crear Ejercicio</ion-title>
+        <ion-icon class="circulo-cerrar"(click)="cerrarModal()" [name]="'close-circle'"></ion-icon>
+    </ion-toolbar>
+</ion-header>
 <ion-content padding>
 
 <form [formGroup]="miForm" (ngSubmit)="onSubmit()">

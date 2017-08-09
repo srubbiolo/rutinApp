@@ -10,6 +10,7 @@ import { Entrenador } from '../../Modelo/entrenador';
 import { Cliente } from '../../Modelo/cliente';
 import { Ejercicio } from '../../Modelo/ejercicio';
 import { Gimnasio } from '../../Modelo/gimnasio';
+import { Alertas } from '../../componentes/alertas/alertas';
 
 @Component({
   selector: 'crear-ejercicio',
@@ -42,7 +43,7 @@ export class CrearEjercicio {
               private cliente: Cliente, private entrenador: Entrenador,
               private gimnasio: Gimnasio, public formBuilder: FormBuilder,
               private servicioLocal: ServicioLocal, private ejercicio: Ejercicio,
-              private servicioEjercicios: ServicioEjercicios) {
+              private servicioEjercicios: ServicioEjercicios, private alerta: Alertas) {
     this.miForm = this.formBuilder.group({
       'nombre': ['', [Validators.required]],
       'series': ['',],
@@ -87,6 +88,7 @@ export class CrearEjercicio {
     ejercicio.esCombinado = (this.infoEjercicio.esCombinado == 'true') ? true : false;
     ejercicio.descripcion = this.infoEjercicio.descripcion;
     this.servicioEjercicios.setEjercicio(ejercicio);
+    this.alerta.mostrarToast('Se le ha creado el ejercicio con éxito', 'top', 2500);
     this.viewCtrl.dismiss();
   }
 }

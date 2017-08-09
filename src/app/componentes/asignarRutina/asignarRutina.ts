@@ -10,6 +10,7 @@ import { Entrenador } from '../../Modelo/entrenador';
 import { Cliente } from '../../Modelo/cliente';
 import { Gimnasio } from '../../Modelo/gimnasio';
 import { Rutina } from '../../Modelo/rutina';
+import { Alertas } from '../../componentes/alertas/alertas';
 
 import { AlertController } from 'ionic-angular';
 
@@ -29,7 +30,8 @@ export class AsignarRutina implements OnInit {
               private cliente: Cliente, private entrenador: Entrenador,
               private gimnasio: Gimnasio, public formBuilder: FormBuilder,
               private servicioLocal: ServicioLocal, private alertCtrl: AlertController,
-              private servicioRutinas: ServicioRutinas, private navParams: NavParams) { }
+              private servicioRutinas: ServicioRutinas, private navParams: NavParams,
+              private alerta: Alertas) { }
 
   ngOnInit(): void {
     var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
@@ -73,7 +75,6 @@ export class AsignarRutina implements OnInit {
   }
 
   asignarRutina(): void {
-    console.log(this.clienteSeleccionado, this.rutinaSeleccionada);
     let alert = this.alertCtrl.create({
       title: 'Asignar Rutina a Cliente',
       message: 'Usted está por asignar a: ' + this.clienteSeleccionado.nombre +
@@ -89,6 +90,7 @@ export class AsignarRutina implements OnInit {
           text: 'Confirmar',
           handler: () => {
             this.servicioPersonas.asignarRutinaACliente(this.clienteSeleccionado, this.rutinaSeleccionada);
+            this.alerta.mostrarToast('Se le ha asignado la rutina con éxito a: ' + this.clienteSeleccionado.nombre + ' ' + this.clienteSeleccionado.apellido, 'top', 2500);
             this.viewCtrl.dismiss();
           }
         }

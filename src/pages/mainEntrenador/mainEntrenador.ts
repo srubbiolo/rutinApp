@@ -30,6 +30,9 @@ export class MainEntrenador implements OnInit {
     var usuarioRegistrado: any = this.servicioLocal.getUsuarioRegistrado();
     this.servicioPersonas.getTodosLosClientes().then((clientes) => {
       this.clientesQuePidieronRutina = clientes.filter(cliente =>{
+        return cliente.emailDelEntrenador === usuarioRegistrado.email;
+      });
+      this.clientesQuePidieronRutina = this.clientesQuePidieronRutina.filter(cliente =>{
         return cliente.solicitoRutina === true;
       });
       this.mostrarClientes = (this.clientesQuePidieronRutina.length > 0);

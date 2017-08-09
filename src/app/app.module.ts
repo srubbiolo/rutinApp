@@ -45,8 +45,11 @@ import { VerEjercicio } from '../app/componentes/verEjercicio/verEjercicio';
     VerEjercicio
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
-  ],
+    IonicModule.forRoot(MyApp, {
+      scrollAssist: true,
+      autoFocusAssist: true
+    })
+    ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,

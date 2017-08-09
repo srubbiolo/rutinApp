@@ -10,6 +10,8 @@ import { Entrenador } from '../../app/Modelo/entrenador';
 import { Gimnasio } from '../../app/Modelo/gimnasio';
 import { Alertas } from '../../app/componentes/alertas/alertas';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MainCliente } from '../mainCliente/mainCliente';
+import { MainEntrenador } from '../mainEntrenador/mainEntrenador';
 
 @Component({
   selector: 'registrar-usuario',
@@ -187,7 +189,7 @@ export class RegistrarUsuario implements OnInit{
       return formField.valid || formField.pristine;
   }
 
-  onSubmit() {
+  onSubmit(): void {
     var usuario = (this.tipoUsuario == 'cliente') ? new Cliente : new Entrenador;
     usuario.nombre = this.infoUsuario.nombre;
     usuario.apellido = this.infoUsuario.apellido;
@@ -201,14 +203,14 @@ export class RegistrarUsuario implements OnInit{
 
     if (this.tipoUsuario == 'cliente') {
       this.servicioPersonas.setUsuario(usuario, 'cliente');
-      // this.servicioPersonas.setUsuarioIniciadoSesion(usuario, 'cliente');
-      // this.servicioLocal.setUsuarioRegistrado(usuario);
-      //this.navCtrl.push(MainCliente)
+      this.servicioPersonas.setUsuarioIniciadoSesion(usuario, 'cliente');
+      this.servicioLocal.setUsuarioRegistrado(usuario);
+      this.navCtrl.push(MainCliente)
     } else {
       this.servicioPersonas.setUsuario(usuario, 'entrenador')
-      // this.servicioPersonas.setUsuarioIniciadoSesion(usuario, 'entrenador');
-      // this.servicioLocal.setUsuarioRegistrado(usuario);
-      //this.navCtrl.push(MainEntrenador)
+      this.servicioPersonas.setUsuarioIniciadoSesion(usuario, 'entrenador');
+      this.servicioLocal.setUsuarioRegistrado(usuario);
+      this.navCtrl.push(MainEntrenador)
     }
 
   }

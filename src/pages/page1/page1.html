@@ -1,14 +1,6 @@
-<ion-header>
-  <ion-navbar hideBackButton>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Pagsfsdfsa</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
-  <h3>RutinApp</h3>
+  <h3 style="text-align: center">Bienvenido a RutinApp</h3>
+  <p style="text-align: center"> Inicie sesión o cree una cuenta nueva </p>
 <ion-list>
   <ion-item>
     <ion-label color="primary" floating>Correo electrónico</ion-label>
@@ -22,11 +14,14 @@
   <button ion-button full (click)="registrarUsuario()" >No estoy registrado</button>
 </ion-list>
 
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+<button ion-button full color="danger" *ngIf="mostrarDevTools" (click)="toggleDevTools()"> MostrarDevTools</button>
+<button ion-button full color="danger" *ngIf="!mostrarDevTools" (click)="toggleDevTools()"> OcultarDevTools</button>
+<div *ngIf="!mostrarDevTools">
   <button ion-button color="secondary" (click)="eliminar()">Eliminar todo</button>
-<button ion-button color="dark"(click)="mostrar()">mostrar todo</button>
-<button ion-button color="dark"(click)="cargar1y1()">Cargar un entrenador y un cliente</button>
-<button ion-button color="danger" (click)="agregarGimnasios()">Agregar gimnasios</button>
-<button ion-button color="dark"(click)="mostrarGimnasios()">Mostrar gimnasios</button>
+  <button ion-button color="dark"(click)="mostrar()">mostrar todo</button>
+  <button ion-button color="dark"(click)="cargar1y1()">Cargar un entrenador y un cliente</button>
+  <button ion-button color="danger" (click)="agregarGimnasios()">Agregar gimnasios</button>
+  <button ion-button color="dark"(click)="mostrarGimnasios()">Mostrar gimnasios</button>
+</div>
+
 </ion-content>
